@@ -1,0 +1,50 @@
+---
+import Base from "@/layouts/Base.astro";
+import { site } from "@/lib/site";
+---
+
+<Base title="Contact" description="Contact Matt for UX design work, collaboration, and portfolio inquiries.">
+  <section class="site-container contact-page">
+    <div>
+      <h1 class="display-lg">Let's talk through the work.</h1>
+      <p class="body-lg">
+        The fastest path is email. Send a note with the product context, team shape, and what kind of UX problem you are
+        trying to solve.
+      </p>
+    </div>
+    <div class="contact-actions" aria-label="Contact links">
+      <a class="button button-primary" href={`mailto:${site.email}`}>Email Matt</a>
+      <a class="button button-secondary" href={site.socials.linkedin}>LinkedIn</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact-page {
+    display: grid;
+    gap: 2rem;
+    min-height: 68svh;
+    padding-block: var(--gap-hero);
+  }
+
+  .contact-page h1,
+  .contact-page p {
+    margin: 0;
+  }
+
+  .contact-page h1 {
+    max-width: 12ch;
+  }
+
+  .contact-page .body-lg {
+    color: var(--color-muted);
+    margin-block-start: 1rem;
+    max-width: 42rem;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+</style>

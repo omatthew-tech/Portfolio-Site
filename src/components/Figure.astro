@@ -1,0 +1,152 @@
+---
+import { cfImage } from "@/lib/cf-image";
+
+interface Props {
+  id?: string;
+  src?: string;
+  alt: string;
+  caption?: string;
+  width?: number;
+  height?: number;
+  loading?: "lazy" | "eager";
+  priority?: boolean;
+  sizes?: string;
+  bleed?: "none" | "wide";
+  variant?: "default" | "screenshot";
+  size?: "sm" | "md" | "lg" | "xl" | "full";
+  align?: "left" | "center" | "right";
+}
+
+const {
+  id,
+  src,
+  alt,
+  caption,
+  width = 1600,
+  height = 1000,
+  loading = "lazy",
+  priority = false,
+  sizes = "(min-width: 80rem) 72rem, calc(100vw - 2rem)",
+  bleed = "none",
+  variant = "default",
+  size = "full",
+  align = "left",
+} = Astro.props;
+
+const widths = [640, 960, 1280, 1920];
+const hasCloudflareId = Boolean(id && import.meta.env.PUBLIC_CF_IMAGES_HASH);
+const imageSrc = id ? cfImage(id, { w: width, format: "auto" }) : src;
+const srcset = id
+  ? widths
+      .map(
+        (candidate) =>
+          `${cfImage(id, { w: candidate, format: "auto" })} ${candidate}w`,
+      )
+      .join(", ")
+  : undefined;
+---
+
+<figure
+  class:list={[
+    "figure",
+    variant === "screenshot" && "figure-screenshot",
+    bleed === "wide" && "figure-wide",
+    `figure-size-${size}`,
+    `figure-align-${align}`,
+  ]}
+>
+  <picture>
+    {
+      hasCloudflareId && (
+        <source srcset={srcset} sizes={sizes} type="image/avif" />
+      )
+    }
+    {
+      hasCloudflareId && (
+        <source srcset={srcset} sizes={sizes} type="image/webp" />
+      )
+    }
+    <img
+      src={imageSrc}
+      alt={alt}
+      width={width}
+      height={height}
+      loading={loading}
+      decoding="async"
+      fetchpriority={priority ? "high" : "auto"}
+    />
+  </picture>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .figure {
+    --figure-max: 100%;
+
+    margin: 0;
+    max-width: var(--figure-max);
+  }
+
+  .figure img {
+    aspect-ratio: 16 / 10;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .figure-wide img {
+    border-radius: var(--radius-none);
+  }
+
+  .figure-size-sm {
+    --figure-max: min(100%, calc(var(--spacing-1600) * 3));
+  }
+
+  .figure-size-md {
+    --figure-max: min(100%, calc(var(--spacing-1600) * 5));
+  }
+
+  .figure-size-lg {
+    --figure-max: min(100%, calc(var(--spacing-1600) * 7));
+  }
+
+  .figure-size-xl {
+    --figure-max: min(100%, calc(var(--spacing-1600) * 9));
+  }
+
+  .figure-align-center {
+    justify-self: center;
+    margin-inline: auto;
+  }
+
+  .figure-align-right {
+    justify-self: end;
+    margin-inline: auto 0;
+  }
+
+  .figure-screenshot {
+    background: var(--color-surface);
+    border: 1px solid var(--color-surface-muted);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-100);
+  }
+
+  .figure-screenshot img {
+    aspect-ratio: auto;
+    background: var(--color-neutral);
+    border: 1px solid var(--color-surface-muted);
+    margin-inline: auto;
+    max-height: min(72vh, 48rem);
+    object-fit: contain;
+    width: auto;
+  }
+
+  figcaption {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-block-start: 0.75rem;
+  }
+</style>

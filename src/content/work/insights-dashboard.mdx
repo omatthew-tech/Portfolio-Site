@@ -1,0 +1,36 @@
+---
+title: "Designing an insights dashboard for faster triage"
+summary: "A dashboard system that helped operations teams see risk signals earlier and move from broad status to specific action."
+role: "Product designer"
+company: "B2B analytics team"
+year: 2024
+tags: ["Dashboard design", "Systems", "Research"]
+cover:
+  id: "insights-dashboard"
+  alt: "A product dashboard with chart cards, filters, and highlighted data paths."
+featured: true
+order: 3
+draft: false
+nda: true
+---
+
+## Overview
+
+The team had plenty of data and not enough signal. Operators were scanning multiple reports, exporting CSVs, and using chat threads to understand whether a metric required action or simple observation.
+
+## Problem
+
+The previous dashboard treated every number as equally important. That made the interface feel complete but not useful under time pressure. Interviews showed that teams wanted to know what changed, why it changed, and who should act.
+
+## Approach
+
+I introduced a hierarchy that separated stable business context from live operational risk. Summary cards answered whether attention was needed, while detail panels explained which segment, time window, and workflow had moved.
+
+<Compare
+  before="Before: a flat table made every metric compete for attention."
+  after="After: grouped signals let teams move from status to diagnosis."
+/>
+
+## Outcome
+
+The new dashboard gave the team a shared triage surface. It also created reusable chart, filter, and empty-state patterns that could carry into adjacent analytics views without a fresh design pass.

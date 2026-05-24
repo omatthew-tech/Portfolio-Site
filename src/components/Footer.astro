@@ -1,0 +1,79 @@
+---
+import { site } from "@/lib/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-container footer-inner">
+    <div>
+      <a class="footer-name" href="/">{site.name}<span>.</span></a>
+      <p>UX portfolio built with Astro, MDX, Tailwind tokens, and Cloudflare Pages.</p>
+    </div>
+    <nav aria-label="Footer links">
+      <a href={`mailto:${site.email}`}>Email</a>
+      <a href={site.socials.linkedin}>LinkedIn</a>
+      <a href="/work/">Work</a>
+    </nav>
+    <p class="copyright">© {year} Matt</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-block-start: 1px solid var(--color-surface-muted);
+    margin-block-start: var(--gap-section);
+    padding-block: 2rem;
+  }
+
+  .footer-inner {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .footer-name {
+    color: var(--color-primary);
+    display: inline-flex;
+    font-weight: 700;
+    min-height: 44px;
+    place-items: center;
+    text-decoration: none;
+  }
+
+  .footer-name span {
+    color: var(--color-accent);
+  }
+
+  .site-footer p {
+    color: var(--color-muted);
+    margin: 0.5rem 0 0;
+    max-width: 38rem;
+  }
+
+  .site-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+
+  .site-footer nav a {
+    align-items: center;
+    display: inline-flex;
+    min-height: 44px;
+  }
+
+  .copyright {
+    align-self: center;
+  }
+
+  @media (min-width: 48rem) {
+    .footer-inner {
+      align-items: start;
+      grid-template-columns: 1fr auto;
+    }
+
+    .copyright {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

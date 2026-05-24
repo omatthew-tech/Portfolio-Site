@@ -1,0 +1,95 @@
+---
+import { getCollection } from "astro:content";
+
+const pathname = Astro.url.pathname;
+const writingEntries = await getCollection("writing", ({ data }) => import.meta.env.DEV || !data.draft);
+const hasWriting = writingEntries.length > 0;
+
+const links = [
+  { href: "/work/", label: "Work", show: true },
+  { href: "/about/", label: "About", show: true },
+  { href: "/writing/", label: "Writing", show: hasWriting },
+  { href: "/contact/", label: "Contact", show: true },
+].filter((link) => link.show);
+
+const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+---
+
+<header class="site-nav">
+  <div class="site-container nav-inner">
+    <a class="brand" href="/" aria-label="Matt home">Matt<span>.</span></a>
+    <nav aria-label="Primary navigation">
+      {links.map((link) => (
+        <a href={link.href} aria-current={isActive(link.href) ? "page" : undefined}>
+          {link.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-nav {
+    backdrop-filter: blur(18px);
+    background: color-mix(in srgb, var(--color-neutral) 92%, transparent);
+    border-block-end: 1px solid var(--color-surface-muted);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .nav-inner {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    min-height: 72px;
+  }
+
+  .brand,
+  nav a {
+    align-items: center;
+    color: var(--color-primary);
+    display: inline-flex;
+    min-height: 44px;
+    text-decoration: none;
+  }
+
+  .brand {
+    font-weight: 700;
+  }
+
+  .brand span {
+    color: var(--color-accent);
+  }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    justify-content: flex-end;
+  }
+
+  nav a {
+    border-block-end: 2px solid transparent;
+    font-size: 0.9375rem;
+    padding-inline: 0.25rem;
+  }
+
+  nav a[aria-current="page"] {
+    border-color: var(--color-accent);
+  }
+
+  @media (max-width: 28rem) {
+    .nav-inner {
+      align-items: start;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-block: 0.75rem;
+    }
+
+    nav {
+      justify-content: flex-start;
+    }
+  }
+</style>

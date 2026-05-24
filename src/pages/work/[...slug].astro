@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+import Callout from "@/components/Callout.astro";
+import CaseText from "@/components/CaseText.astro";
+import CaseTextPair from "@/components/CaseTextPair.astro";
+import Compare from "@/components/Compare.astro";
+import Figure from "@/components/Figure.astro";
+import FigureGroup from "@/components/FigureGroup.astro";
+import Quote from "@/components/Quote.astro";
+import Case from "@/layouts/Case.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    "work",
+    ({ data }) => import.meta.env.DEV || !data.draft,
+  );
+
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Case entry={entry}>
+  <Content
+    components={{
+      Figure,
+      FigureGroup,
+      Callout,
+      CaseText,
+      CaseTextPair,
+      Compare,
+      Quote,
+    }}
+  />
+</Case>

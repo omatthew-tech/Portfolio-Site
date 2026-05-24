@@ -1,0 +1,98 @@
+---
+import ContactCTA from "@/components/ContactCTA.astro";
+import Base from "@/layouts/Base.astro";
+---
+
+<Base title="About" description="About Matt, a UX designer focused on product clarity, research, and systems.">
+  <section class="site-container about-hero">
+    <h1 class="display-lg">I turn ambiguity into product decisions teams can trust.</h1>
+  </section>
+
+  <section class="site-container about-grid" aria-label="About Matt">
+    <div class="prose-flow">
+      <p>
+        Matt is a UX designer who works across discovery, interaction design, and product systems. His practice starts
+        with evidence, narrows into crisp decisions, and ends in interfaces that are easier for teams to maintain.
+      </p>
+      <p>
+        He is especially interested in complex workflows: dashboards, internal tools, commerce paths, and research-heavy
+        product surfaces where clarity has direct business value.
+      </p>
+    </div>
+    <div class="cv-panel" aria-labelledby="cv-title">
+      <h2 id="cv-title" class="h3">Experience</h2>
+      <dl>
+        <div>
+          <dt>2024 - Present</dt>
+          <dd>UX designer, product systems</dd>
+        </div>
+        <div>
+          <dt>2021 - 2024</dt>
+          <dd>Product designer, research-led workflows</dd>
+        </div>
+        <div>
+          <dt>2019 - 2021</dt>
+          <dd>UX generalist, web and app experiences</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <ContactCTA />
+</Base>
+
+<style>
+  .about-hero {
+    padding-block: var(--gap-hero) var(--gap-section);
+  }
+
+  .about-hero h1 {
+    margin: 0;
+    max-width: 13ch;
+  }
+
+  .about-grid {
+    display: grid;
+    gap: var(--gap-section);
+  }
+
+  .cv-panel {
+    background: var(--color-surface);
+    border: 1px solid var(--color-surface-muted);
+    border-radius: var(--radius-lg);
+    padding: var(--pad-card);
+  }
+
+  .cv-panel h2 {
+    margin: 0;
+  }
+
+  .cv-panel dl {
+    display: grid;
+    gap: 1rem;
+    margin: 1.25rem 0 0;
+  }
+
+  .cv-panel div {
+    border-block-start: 1px solid var(--color-surface-muted);
+    display: grid;
+    gap: 0.35rem;
+    padding-block-start: 1rem;
+  }
+
+  .cv-panel dt {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+  }
+
+  .cv-panel dd {
+    margin: 0;
+  }
+
+  @media (min-width: 56rem) {
+    .about-grid {
+      align-items: start;
+      grid-template-columns: minmax(0, 1fr) 22rem;
+    }
+  }
+</style>

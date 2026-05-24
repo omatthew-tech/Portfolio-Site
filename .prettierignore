@@ -1,0 +1,11 @@
+node_modules/
+.pnpm-store/
+dist/
+.astro/
+coverage/
+.axe-chrome/
+.chrome-test/
+.chrome-test-old/
+pnpm-lock.yaml
+DESIGN.md
+PLAN.md

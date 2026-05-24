@@ -1,0 +1,204 @@
+---
+title: "Test4Test: improving reciprocal user testing"
+summary: "A platform where startup founders can exchange feedback, iterate quickly and explore new ideas."
+role: "Founder, product designer, and builder"
+company: "Test4Test"
+year: 2026
+tags: ["Product design", "UX research", "Growth", "Usability testing"]
+cover:
+  id: "test4test-homepage"
+  alt: "The Test4Test homepage showing a hero for free user testing on web or mobile apps."
+featured: true
+order: 0
+draft: false
+nda: false
+---
+
+## The Story
+
+I built a dating app for introverts called OneAtATime.Dating, but it was quickly rejected by the App Store because there are already too many dating apps. I ran out of ideas and wanted user feedback.
+
+Maze, UXtweak, and Lyssna are often treated as the best free user-testing tools, but they either overly complicate the process or start around $200 per month. There are communities like r/alphaandbetausers, but you are lucky to get a single tester, and it is frustrating when you test someone's app and they do not test back.
+
+<FigureGroup columns={3} variant="compact">
+  <Figure
+    id="test4test-story-oneatatime"
+    alt="A Maze template selection screen for creating a new unmoderated study."
+    width={291}
+    height={538}
+    variant="screenshot"
+  />
+
+<Figure
+  id="test4test-story-research-tools"
+  alt="A pricing panel from a user research tool with a total price highlighted."
+  width={444}
+  height={643}
+  variant="screenshot"
+/>
+
+  <Figure
+    id="test4test-story-competitive-plans"
+    alt="A comparison table showing free, growth, business, and enterprise research-tool plans."
+    width={1192}
+    height={1025}
+    variant="screenshot"
+  />
+</FigureGroup>
+
+<CaseText align="center" heading="The Start">
+  With Codex, I quickly made a simple usability platform where users can submit
+  their app, whether it is a website, iOS app, or Android app, and add survey
+  questions that are AI-generated, custom, or general. I also included a survey
+  to understand how users felt about the process.
+</CaseText>
+
+## The Challenge
+
+How can we encourage users to test other users' apps? How can we ensure high-quality feedback?
+
+There were also low-hanging opportunities, like adding a loading state, allowing users to submit links for multiple platforms, comparing app updates before and after, and editing an app's title or information after submission. But test quantity and quality were the most mentioned challenges, and they were core to the mission.
+
+The other major issue was testing Android apps. What if an iPhone user does not have an Android device to test back on? Many Android tests also asked testers to keep an app installed for 14 days. After researching it, I learned that [new personal Google Play developer accounts must run a closed test with at least 12 opted-in testers for 14 continuous days](https://support.google.com/googleplay/android-developer/answer/14151465?hl=en) before applying for production access. That is a much larger commitment than testing an app for a few minutes. Without any advertisement or explanation, around 20% of tests had this requirement.
+
+<FigureGroup columns={2}>
+  <Figure
+    id="test4test-feedback-before"
+    alt="A first version feedback form with several tester comments circled for review."
+    width={977}
+    height={1138}
+    variant="screenshot"
+  />
+
+  <Figure
+    id="test4test-feedback-after"
+    alt="A later feedback version with selected comments circled for comparison."
+    width={978}
+    height={1153}
+    variant="screenshot"
+  />
+</FigureGroup>
+
+## The Solution
+
+The first solution was to display a user's test-back rate and satisfaction rate. This helps users feel that if they test someone's app, that person is likely to test back and give high-quality feedback.
+
+It also encourages users to test back and leave better feedback because their behavior affects their experience going forward. The test-back and satisfaction rates can also be used in emails, encouraging users to return to Test4Test for more activity and creating more opportunities to convert users into paid users.
+
+<Figure
+  id="test4test-test-back-satisfaction-rate"
+  alt="A Test4Test card showing a user's test-back rate and satisfaction rate."
+  width={1067}
+  height={240}
+  variant="screenshot"
+  size="xl"
+/>
+
+To increase the test-back rate further, if a user has tested someone's app, that user's test appears as the priority on the Earn page. This prevents users from testing other apps when they should prioritize testing back people who already tested theirs, speeding up both the test-back rate and the time it takes to receive feedback.
+
+<Figure
+  id="test4test-earn-page-priority"
+  alt="A Test4Test credits page showing an earn-credits module and available tests."
+  width={1055}
+  height={461}
+  variant="screenshot"
+  size="lg"
+  align="center"
+/>
+
+I also added matching rules for device availability and testing expectations. Users who do not have an Android device, or vice versa, only see tests from people who can also test their app. Android users who expect an app to stay installed for 14 days are matched with other users who have the same expectation.
+
+<FigureGroup columns={2} variant="compact">
+  <Figure
+    id="test4test-preferences-popup"
+    alt="A preferences popup asking which platforms a tester can reliably access."
+    width={479}
+    height={505}
+    variant="screenshot"
+  />
+
+  <Figure
+    id="test4test-android-fourteen-day"
+    alt="An Android app signup step with an option for testers to keep the app for 14 days."
+    width={754}
+    height={574}
+    variant="screenshot"
+  />
+</FigureGroup>
+
+<CaseTextPair>
+  <Fragment slot="primary">
+    A feedback revision system was designed to prevent users from leaving
+    low-quality feedback. Users can easily rate feedback. If feedback is low
+    quality, Test4Test emails that tester and lets them know they can revise it.
+    If the feedback is revised, it restores their satisfaction rate.
+  </Fragment>
+
+  <Fragment slot="secondary">
+    Tips can also be sent to users through PayPal, Venmo, or Cash App. While
+    this feature may feel small, it was a quick indicator that users were
+    willing to pay for high-quality feedback.
+  </Fragment>
+</CaseTextPair>
+
+<FigureGroup columns={2} variant="compact">
+  <Figure
+    id="test4test-revise-feedback"
+    alt="A BrandSheet test row with a revise feedback action."
+    width={1058}
+    height={179}
+    variant="screenshot"
+  />
+
+  <Figure
+    id="test4test-feedback-ratings"
+    alt="Feedback rating buttons labeled Low value, Okay, Helpful, and Tip."
+    width={488}
+    height={60}
+    variant="screenshot"
+  />
+</FigureGroup>
+
+Other low-hanging opportunities were implemented as well: edit app details after submission, send clearer test emails, resume an interrupted test, and confirm when answers are saved.
+
+<FigureGroup columns={4} variant="strip">
+  <Figure
+    id="test4test-edit-app-popup"
+    alt="An edit app popup with fields for app name, app type, and app link."
+    width={979}
+    height={898}
+    variant="screenshot"
+  />
+
+<Figure
+  id="test4test-share-test-email"
+  alt="A share test screen previewing a tester invitation email."
+  width={918}
+  height={896}
+  variant="screenshot"
+/>
+
+<Figure
+  id="test4test-resume-test-button"
+  alt="A prominent button labeled Resume test."
+  width={168}
+  height={55}
+  variant="screenshot"
+  size="sm"
+/>
+
+  <Figure
+    id="test4test-answer-saved-toast"
+    alt="A saved state reading 1 of 6 answered and answers saved."
+    width={148}
+    height={70}
+    variant="screenshot"
+    size="sm"
+  />
+</FigureGroup>
+
+## The Results
+
+Before implementing the test-back rate, satisfaction rate, email follow-ups, and feedback revision flow, the likelihood of someone recommending Test4Test was 43%. After the implementations, it rose to 56%.
+
+I also received my first paid tip, which indicated that users were willing to pay to receive higher-quality user feedback on Test4Test.

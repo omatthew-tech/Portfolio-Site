@@ -1,0 +1,53 @@
+---
+import { getCollection } from "astro:content";
+import WorkCard from "@/components/WorkCard.astro";
+import Base from "@/layouts/Base.astro";
+
+const work = (await getCollection("work", ({ data }) => !data.draft)).sort((a, b) => b.data.year - a.data.year);
+---
+
+<Base title="Work" description="Selected UX case studies by Matt.">
+  <section class="site-container work-index">
+    <div class="work-index-header">
+      <h1 class="display-lg">Selected product stories.</h1>
+      <p class="body-lg">A small set of UX case studies focused on process, tradeoffs, and outcomes.</p>
+    </div>
+    <div class="work-grid">
+      {work.map((entry) => <WorkCard entry={entry} />)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .work-index {
+    display: grid;
+    gap: var(--gap-section);
+    padding-block: var(--gap-hero);
+  }
+
+  .work-index-header {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .work-index-header h1,
+  .work-index-header p {
+    margin: 0;
+  }
+
+  .work-index-header .body-lg {
+    color: var(--color-muted);
+    max-width: 42rem;
+  }
+
+  .work-grid {
+    display: grid;
+    gap: var(--gutter-grid);
+  }
+
+  @media (min-width: 48rem) {
+    .work-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

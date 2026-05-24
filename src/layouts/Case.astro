@@ -1,0 +1,177 @@
+---
+import CaseHeader from "@/components/CaseHeader.astro";
+import ContactCTA from "@/components/ContactCTA.astro";
+import Prose from "@/components/Prose.astro";
+import Base from "@/layouts/Base.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"work">;
+}
+
+const { entry } = Astro.props;
+---
+
+<Base title={entry.data.title} description={entry.data.summary}>
+  <CaseHeader entry={entry} />
+  <div class="case-main">
+    <article class="case-body site-container">
+      <Prose>
+        <slot />
+      </Prose>
+    </article>
+  </div>
+  <ContactCTA />
+</Base>
+
+<style>
+  .case-main {
+    background: var(--color-neutral);
+    padding-block: 0 var(--gap-hero);
+  }
+
+  .case-body {
+    --case-content-max: calc(var(--spacing-1600) * 9);
+    --case-copy-gap: var(--gap-prose-paragraph);
+    --case-heading-copy-gap: var(--gap-prose-heading-copy);
+    --case-content-gap: var(--gap-content-block);
+    --case-media-gap: var(--gap-section);
+    --case-section-gap: var(--gap-hero);
+
+    max-width: calc(
+      var(--case-content-max) + var(--inset-page) + var(--inset-page)
+    );
+    padding-block-start: var(--gap-section);
+  }
+
+  :global(.case-body .prose-flow) {
+    display: grid;
+    max-width: none;
+    width: 100%;
+  }
+
+  :global(.case-body .prose-flow > *) {
+    margin-block: 0;
+    min-width: 0;
+  }
+
+  :global(.case-body .prose-flow > .figure),
+  :global(.case-body .prose-flow > .figure-group),
+  :global(.case-body .prose-flow > .compare),
+  :global(.case-body .prose-flow > .quote) {
+    margin-block-start: var(--case-media-gap);
+    width: 100%;
+  }
+
+  :global(.case-body .prose-flow > .case-text),
+  :global(.case-body .prose-flow > .case-text-pair) {
+    width: 100%;
+  }
+
+  :global(.case-body .prose-flow > .callout) {
+    margin-block-start: var(--case-copy-gap);
+    width: 100%;
+  }
+
+  :global(.case-body .prose-flow > .figure + .figure) {
+    margin-block-start: var(--case-copy-gap);
+  }
+
+  :global(.case-body .prose-flow > p + p),
+  :global(.case-body .prose-flow > ul + p),
+  :global(.case-body .prose-flow > ol + p),
+  :global(.case-body .prose-flow > p + ul),
+  :global(.case-body .prose-flow > p + ol) {
+    margin-block-start: var(--case-copy-gap);
+  }
+
+  :global(.case-body .prose-flow > h2 + p),
+  :global(.case-body .prose-flow > h3 + p) {
+    margin-block-start: var(--case-heading-copy-gap);
+  }
+
+  :global(.case-body .prose-flow > p + h3),
+  :global(.case-body .prose-flow > ul + h3),
+  :global(.case-body .prose-flow > ol + h3) {
+    margin-block-start: var(--case-copy-gap);
+  }
+
+  :global(
+    .case-body
+      .prose-flow
+      > :is(.figure, .figure-group, .compare, .quote, .callout)
+      + :is(p, h3, ul, ol)
+  ) {
+    margin-block-start: var(--case-content-gap);
+  }
+
+  :global(
+    .case-body
+      .prose-flow
+      > :is(.figure, .figure-group, .compare, .quote, .callout)
+      + .case-text-pair
+  ) {
+    margin-block-start: var(--case-content-gap);
+  }
+
+  :global(
+    .case-body
+      .prose-flow
+      > :is(.figure, .figure-group, .compare, .quote, .callout)
+      + .case-text
+  ) {
+    margin-block-start: var(--case-section-gap);
+  }
+
+  :global(
+    .case-body
+      .prose-flow
+      > :is(p, ul, ol, h3)
+      + :is(.case-text, .case-text-pair)
+  ) {
+    margin-block-start: var(--case-content-gap);
+  }
+
+  :global(.case-body .prose-flow > h2) {
+    border-block-start: 0;
+    margin-block-start: var(--case-section-gap);
+    padding-block-start: 0;
+  }
+
+  :global(.case-body .prose-flow > h2:first-child) {
+    margin-block-start: 0;
+    padding-block-start: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .case-body {
+      --case-copy-gap: var(--spacing-300);
+      --case-heading-copy-gap: var(--spacing-250);
+    }
+
+    :global(.case-body .prose-flow) {
+      align-items: start;
+      column-gap: var(--gap-section);
+      grid-template-columns:
+        minmax(0, min(var(--measure-prose), calc(var(--spacing-1600) * 5.5)))
+        minmax(calc(var(--spacing-1600) * 1.5), 1fr);
+    }
+
+    :global(
+      .case-body
+        .prose-flow
+        > :not(.figure):not(.figure-group):not(.compare):not(.quote):not(
+          .case-text
+        ):not(.case-text-pair)
+    ) {
+      grid-column: 1;
+    }
+
+    :global(.case-body .prose-flow > .figure),
+    :global(.case-body .prose-flow > .figure-group),
+    :global(.case-body .prose-flow > .compare),
+    :global(.case-body .prose-flow > .quote) {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

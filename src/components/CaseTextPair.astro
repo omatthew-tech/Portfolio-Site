@@ -1,0 +1,39 @@
+---
+
+---
+
+<div class="case-text-pair">
+  <div class="case-text-pair-primary">
+    <slot name="primary" />
+  </div>
+  <div class="case-text-pair-secondary">
+    <slot name="secondary" />
+  </div>
+</div>
+
+<style>
+  .case-text-pair {
+    display: grid;
+    gap: var(--case-content-gap, var(--gap-content-block));
+    max-width: 100%;
+  }
+
+  .case-text-pair :global(*) {
+    margin-block: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .case-text-pair {
+      align-items: start;
+      grid-column: 1 / -1;
+      grid-template-columns:
+        minmax(0, min(var(--measure-prose), calc(var(--spacing-1600) * 5.5)))
+        minmax(calc(var(--spacing-1600) * 1.5), 1fr);
+      column-gap: var(--gap-section);
+    }
+
+    .case-text-pair-secondary {
+      max-width: calc(var(--spacing-1600) * 3.25);
+    }
+  }
+</style>

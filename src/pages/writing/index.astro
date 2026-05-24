@@ -1,0 +1,85 @@
+---
+import { getCollection } from "astro:content";
+import Base from "@/layouts/Base.astro";
+
+const writing = (await getCollection("writing", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<Base title="Writing" description="Notes and essays by Matt.">
+  <section class="site-container writing-index">
+    <div>
+      <h1 class="display-lg">Notes on product design.</h1>
+    </div>
+    {writing.length === 0 ? (
+      <p class="body-lg empty">Writing will appear here when essays are published.</p>
+    ) : (
+      <ol>
+        {writing.map((entry) => (
+          <li>
+            <a href={`/writing/${entry.slug}/`}>
+              <span>{entry.data.title}</span>
+              <time datetime={entry.data.pubDate.toISOString()}>
+                {entry.data.pubDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+              </time>
+            </a>
+          </li>
+        ))}
+      </ol>
+    )}
+  </section>
+</Base>
+
+<style>
+  .writing-index {
+    display: grid;
+    gap: var(--gap-section);
+    min-height: 62svh;
+    padding-block: var(--gap-hero);
+  }
+
+  .writing-index h1,
+  .writing-index p {
+    margin: 0;
+  }
+
+  .empty {
+    color: var(--color-muted);
+  }
+
+  ol {
+    display: grid;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    border-block-start: 1px solid var(--color-surface-muted);
+  }
+
+  li:last-child {
+    border-block-end: 1px solid var(--color-surface-muted);
+  }
+
+  li a {
+    align-items: center;
+    color: var(--color-primary);
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    min-height: 64px;
+    text-decoration: none;
+  }
+
+  li a:hover span {
+    color: var(--color-accent);
+  }
+
+  time {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+  }
+</style>

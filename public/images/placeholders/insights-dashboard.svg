@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Insights dashboard portfolio cover</title>
+  <desc id="desc">A dashboard system with charts, filters, and teal data highlights.</desc>
+  <rect width="1600" height="1000" fill="#FAFAFA"/>
+  <rect x="140" y="130" width="1320" height="740" rx="24" fill="#FFFFFF" stroke="#DADADA" stroke-width="2"/>
+  <rect x="140" y="130" width="1320" height="92" rx="24" fill="#0A0A0A"/>
+  <circle cx="220" cy="176" r="12" fill="#FFFFFF"/>
+  <circle cx="265" cy="176" r="12" fill="#FFFFFF" opacity=".7"/>
+  <circle cx="310" cy="176" r="12" fill="#006B75"/>
+  <g fill="#F2F2F2">
+    <rect x="210" y="300" width="300" height="110" rx="14"/>
+    <rect x="560" y="300" width="300" height="110" rx="14"/>
+    <rect x="910" y="300" width="300" height="110" rx="14"/>
+    <rect x="210" y="480" width="550" height="300" rx="14"/>
+    <rect x="810" y="480" width="440" height="300" rx="14"/>
+  </g>
+  <path d="M270 710V610M350 710V560M430 710V640M510 710V530M590 710V585M670 710V505" stroke="#006B75" stroke-width="22" stroke-linecap="round"/>
+  <path d="M870 690c80-170 190 20 290-125" fill="none" stroke="#006B75" stroke-width="12" stroke-linecap="round"/>
+  <g font-family="Inter, Arial, sans-serif" fill="#6B6B6B" font-size="34">
+    <text x="140" y="935">03 / Insights system</text>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Checkout flow portfolio cover</title>
+  <desc id="desc">A checkout flow diagram with product cards and a teal conversion path.</desc>
+  <rect width="1600" height="1000" fill="#FFFFFF"/>
+  <g fill="#FAFAFA" stroke="#DADADA" stroke-width="2">
+    <rect x="170" y="190" width="330" height="560" rx="18"/>
+    <rect x="635" y="190" width="330" height="560" rx="18"/>
+    <rect x="1100" y="190" width="330" height="560" rx="18"/>
+  </g>
+  <g fill="#0A0A0A">
+    <rect x="230" y="270" width="210" height="22" rx="11"/>
+    <rect x="695" y="270" width="210" height="22" rx="11"/>
+    <rect x="1160" y="270" width="210" height="22" rx="11"/>
+  </g>
+  <g fill="#F2F2F2">
+    <rect x="230" y="340" width="210" height="150" rx="12"/>
+    <rect x="695" y="340" width="210" height="150" rx="12"/>
+    <rect x="1160" y="340" width="210" height="150" rx="12"/>
+    <rect x="230" y="540" width="180" height="18" rx="9"/>
+    <rect x="695" y="540" width="180" height="18" rx="9"/>
+    <rect x="1160" y="540" width="180" height="18" rx="9"/>
+  </g>
+  <path d="M500 470h135M965 470h135" stroke="#006B75" stroke-width="10" stroke-linecap="round"/>
+  <path d="m618 436 38 34-38 34M1083 436l38 34-38 34" fill="none" stroke="#006B75" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <g font-family="Inter, Arial, sans-serif" fill="#6B6B6B" font-size="34">
+    <text x="170" y="860">02 / Checkout redesign</text>
+  </g>
+</svg>

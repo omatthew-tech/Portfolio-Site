@@ -1,0 +1,170 @@
+---
+import Figure from "@/components/Figure.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"work">;
+}
+
+const { entry } = Astro.props;
+const { title, summary, cover, role, company, year } = entry.data;
+---
+
+<header class="case-header">
+  <div class="case-header-band">
+    <div class="site-container case-header-inner">
+      <div class="case-header-copy">
+        <a class="back-link" href="/work/">Back to all work</a>
+        <h1 class="display-lg">{title}</h1>
+        <p class="body-lg">{summary}</p>
+      </div>
+      <dl class="case-meta" aria-label="Project details">
+        <div>
+          <dt>Role</dt>
+          <dd>{role}</dd>
+        </div>
+        {
+          company && (
+            <div>
+              <dt>Company</dt>
+              <dd>{company}</dd>
+            </div>
+          )
+        }
+        <div>
+          <dt>Year</dt>
+          <dd>{year}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+  <div class="site-container-wide case-media-container">
+    <Figure
+      id={cover.id}
+      alt={cover.alt}
+      width={1600}
+      height={1000}
+      loading="eager"
+      priority
+    />
+  </div>
+</header>
+
+<style>
+  .case-header {
+    background: var(--color-neutral);
+    padding-block-end: 0;
+  }
+
+  .case-header-band {
+    background: var(--color-neutral);
+    padding-block: var(--gap-hero) var(--gap-section);
+  }
+
+  .case-header-inner {
+    display: grid;
+    gap: var(--gap-section);
+    justify-items: start;
+    max-width: calc(
+      (var(--spacing-1600) * 9) + var(--inset-page) + var(--inset-page)
+    );
+  }
+
+  .case-header-copy,
+  .case-meta {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .case-header h1,
+  .case-header p,
+  .case-header dl,
+  .case-header dd {
+    margin: 0;
+  }
+
+  .case-header .label-caps {
+    color: var(--color-accent);
+    margin-block-end: 1rem;
+  }
+
+  .case-header-copy {
+    max-width: calc(var(--spacing-1600) * 6.5);
+  }
+
+  .case-header h1 {
+    max-width: 18ch;
+  }
+
+  .case-header .body-lg {
+    color: var(--color-muted);
+    margin-block-start: 1.25rem;
+    max-width: calc(var(--spacing-1600) * 5.5);
+  }
+
+  .back-link {
+    display: inline-flex;
+    margin-block-end: var(--gap-content-block);
+    min-height: 44px;
+    place-items: center;
+  }
+
+  .case-meta {
+    border-block-start: 1px solid var(--color-surface-muted);
+    display: grid;
+    max-width: calc(var(--spacing-1600) * 9);
+  }
+
+  .case-meta div {
+    border-block-end: 1px solid var(--color-surface-muted);
+    display: grid;
+    gap: 0.25rem;
+    padding-block: 1rem;
+  }
+
+  .case-meta dt {
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .case-meta dd {
+    color: var(--color-primary);
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .case-media-container {
+    max-width: calc(
+      (var(--spacing-1600) * 9) + var(--inset-page) + var(--inset-page)
+    );
+  }
+
+  :global(.case-media-container .figure) {
+    background: var(--color-neutral);
+    border: 1px solid var(--color-surface-muted);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    padding: 0.5rem;
+  }
+
+  :global(.case-media-container .figure img) {
+    border-radius: var(--radius-md);
+  }
+
+  @media (min-width: 64rem) {
+    .case-header-band {
+      padding-block-start: calc(var(--gap-hero) * 1.25);
+    }
+
+    .case-meta {
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, calc(var(--spacing-1600) * 1.5)), 1fr)
+      );
+    }
+  }
+</style>

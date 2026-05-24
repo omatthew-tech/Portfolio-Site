@@ -1,0 +1,32 @@
+---
+import Base from "@/layouts/Base.astro";
+---
+
+<Base title="Page not found" description="The page could not be found.">
+  <section class="site-container not-found">
+    <h1 class="display-lg">This page moved out of frame.</h1>
+    <p class="body-lg">The work is still here. Start with the selected case studies.</p>
+    <a class="button button-primary" href="/work/">View work</a>
+  </section>
+</Base>
+
+<style>
+  .not-found {
+    display: grid;
+    gap: 1rem;
+    min-height: 60svh;
+    padding-block: var(--gap-hero);
+    place-content: center start;
+  }
+
+  .not-found h1,
+  .not-found p {
+    margin: 0;
+    max-width: 12ch;
+  }
+
+  .not-found .body-lg {
+    color: var(--color-muted);
+    max-width: 34rem;
+  }
+</style>

@@ -1,0 +1,50 @@
+{
+  "name": "matt-ux-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "dev": "node scripts/run.mjs astro dev",
+    "build": "node scripts/run.mjs astro build",
+    "preview": "node scripts/run.mjs astro preview",
+    "typecheck": "node scripts/run.mjs astro check",
+    "tokens": "node scripts/sync-tokens.mjs",
+    "design:lint": "node node_modules/@google/design.md/dist/index.js lint DESIGN.md",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run --passWithNoTests",
+    "test:a11y": "node scripts/check-a11y.mjs",
+    "lh": "node scripts/check-perf.mjs"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.0.0",
+    "@astrojs/rss": "^4.0.0",
+    "@astrojs/sitemap": "^3.2.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "astro": "^5.0.0",
+    "astro-icon": "^1.1.5",
+    "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@axe-core/cli": "^4.10.0",
+    "@google/design.md": "^0.1.0",
+    "@iconify-json/lucide": "^1.2.0",
+    "@lhci/cli": "^0.14.0",
+    "@types/node": "^22.0.0",
+    "chromedriver": "148.0.4",
+    "prettier": "^3.3.0",
+    "prettier-plugin-astro": "^0.14.0",
+    "prettier-plugin-tailwindcss": "^0.6.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "chromedriver",
+      "esbuild",
+      "sharp"
+    ]
+  }
+}
