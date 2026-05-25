@@ -6,6 +6,6 @@
 - Never add React/Vue/Svelte. Islands only on real interactivity need.
 - A11y: WCAG 2.2 AA, 44px touch min, full keyboard path, `prefers-reduced-motion` respected.
 - Perf budgets: home <= 250 KB, case <= 600 KB (sans hero); LCP <= 1.5s mobile.
-- Content lives in `src/content/{work,writing}` as MDX with Zod-validated frontmatter.
+- Content lives in `src/content/work` as MDX with Zod-validated frontmatter.
 - Images: Cloudflare Images via `<Figure>`; never raw `<img>` for case-study assets.
 - Definition of done: all gates in PLAN.md section 7 green.

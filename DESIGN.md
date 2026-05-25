@@ -331,7 +331,7 @@ Run `npx @google/design.md lint DESIGN.md` before every release. The CLI verifie
 Two families. Self-hosted as WOFF2. No Google Fonts CDN.
 
 - **Instrument Serif** — display only. Hero name, case-study cover titles, the occasional pull-quote. Tracking is tightened slightly (`-0.02em`) at large sizes to keep the serif feeling intentional rather than archaic. Never used below 30 px / `display-md`.
-- **Inter Variable** — everything else. Headings, body, UI, navigation, labels. Inter is the most-common typeface across the surveyed portfolio set; it carries no genre and gets out of the way of the writing.
+- **Inter Variable** — everything else. Headings, body, UI, navigation, labels. Inter is the most-common typeface across the surveyed portfolio set; it carries no genre and gets out of the way of the content.
 - **JetBrains Mono** — code blocks, keyboard hints, version chips inside case studies. Used sparingly.
 
 ### Type scale (desktop defaults)
@@ -567,7 +567,7 @@ This system synthesizes two source documents and a ~80-site survey of contempora
 Sampled across ~80 designer portfolios spanning new-grads through principals (Sanjeev Sriram, Brittney Nguyen, Tyler Jordan, Tara Caverly, Matt Ahrens, Austin Knight, Bethany Heck, Jon Yablonski, Claudio Guglieri, Buzz Usborne, Aaron James, Bill Horan, Jonathan Patterson, Ryan Scott, Karolis Kosas, Frances Tung, Ryan Wagner, Shuqi Yan, Samrudha Malandkar, Darshan Munkur, Urvesh Patel, and many more). The patterns that recurred and are therefore encoded above:
 
 1. **Type-led hero with personal voice.** "Hi, I'm \<name\>" / "I design \<thing\>" — universal across the sample.
-2. **Three-to-five-item top nav.** Work · About · Resume · Contact (+ sometimes Writing). Persistent and predictable.
+2. **Three-to-five-item top nav.** Work · About · Resume · Contact. Persistent and predictable.
 3. **Selected Work grid of 3–6 case studies.** Each card carries cover, title, role/company, summary, CTA. Numbered prefixes (`01 · 02 · 03`) appeared often enough to make optional here.
 4. **Monochrome canvas plus a single accent.** Cream/white + ink + one chromatic color was overwhelmingly the dominant palette pattern. Multi-color palettes were a small minority.
 5. **Inter (or Inter-class neutral sans) as the UI default**, paired with a serif (Instrument Serif, PP Editorial, Tiempos, GT Super) for hero/case-study display type. Inter was the most-common UI typeface across the surveyed sample.

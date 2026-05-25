@@ -22,14 +22,4 @@ const work = defineCollection({
   }),
 });
 
-const writing = defineCollection({
-  type: "content",
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.date(),
-    draft: z.boolean().default(false),
-  }),
-});
-
-export const collections = { work, writing };
+export const collections = { work };

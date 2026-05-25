@@ -28,7 +28,7 @@ When this plan completes, a visitor on a fresh laptop can: hit the homepage in u
 |---|---|---|
 | Framework | **Astro 5+** with `output: "static"` | Zero-JS by default; ideal for content sites; Cloudflare Pages first-class. |
 | Language | **TypeScript** strict | Catch token/type mismatches before runtime. |
-| Content | **MDX** case studies under `src/content/work/` using Astro Content Collections + Zod | Type-safe frontmatter, MDX components, easy local writing. |
+| Content | **MDX** case studies under `src/content/work/` using Astro Content Collections + Zod | Type-safe frontmatter, MDX components, easy local editing. |
 | Styling | **Tailwind v4** (`@theme` CSS variables) | Tokens align 1:1 with `DESIGN.md` export. |
 | Hosting | **Cloudflare Pages** | Free TLS, edge CDN, preview deploys per branch. |
 | Images | **Cloudflare Images** for case-study assets; local `astro:assets` allowed for tiny icons/SVG | Auto AVIF/WebP, variants, fast worldwide. |
@@ -60,11 +60,10 @@ When this plan completes, a visitor on a fresh laptop can: hit the homepage in u
 │   └── og-default.png
 ├── src/
 │   ├── content/
-│   │   ├── config.ts         # Zod schemas for work + writing
+│   │   ├── config.ts         # Zod schemas for work
 │   │   ├── work/             # MDX case studies
 │   │   │   ├── _template.mdx
 │   │   │   └── example-case.mdx
-│   │   └── writing/          # optional MDX essays
 │   ├── components/
 │   │   ├── Nav.astro
 │   │   ├── Footer.astro
@@ -84,10 +83,6 @@ When this plan completes, a visitor on a fresh laptop can: hit the homepage in u
 │   │   ├── work/
 │   │   │   ├── index.astro       # all case studies
 │   │   │   └── [...slug].astro   # MDX render
-│   │   ├── writing/
-│   │   │   ├── index.astro
-│   │   │   └── [...slug].astro
-│   │   ├── rss.xml.ts
 │   │   ├── sitemap.xml.ts (auto via @astrojs/sitemap)
 │   │   └── 404.astro
 │   ├── styles/
@@ -122,7 +117,7 @@ When this plan completes, a visitor on a fresh laptop can: hit the homepage in u
 
 The full visual system, tokens, type, spacing, components, do's-and-don'ts, and the rationale for every decision live in **`DESIGN.md`** at the repo root, in Google Labs' open DESIGN.md format. Do not invent colors, fonts, sizes, or spacing values — pull from `DESIGN.md` via the exported Tailwind theme.
 
-Three things to internalize before writing components:
+Three things to internalize before building components:
 
 1. **Type-led, monochrome + one accent.** Large display headings carry the page; `#006B75` appears only on interactive affordances and one signature mark.
 2. **Hybrid 4/8 spacing with responsive semantic aliases.** Use the aliases (`inset-page`, `pad-card`, `gap-section`, `measure-prose`) rather than raw px.
@@ -140,7 +135,7 @@ Three things to internalize before writing components:
 - [ ] **M3** — Home page (hero + selected work grid + contact CTA)
 - [ ] **M4** — Content collections + work index + case study route
 - [ ] **M5** — About + Contact pages
-- [ ] **M6** — Writing collection (optional MDX essays) + RSS
+- [ ] **M6** — Reserved
 - [ ] **M7** — Cloudflare Images integration + responsive `<Figure>`
 - [ ] **M8** — A11y + performance hardening
 - [ ] **M9** — CI/CD on Cloudflare Pages + custom domain
@@ -179,7 +174,7 @@ Three things to internalize before writing components:
 
 **Behavior:**
 - `Base.astro` sets `<html lang="en">`, `<meta>`, preloads two WOFF2 files (Inter, Instrument Serif), sets theme color, injects Cloudflare Web Analytics beacon.
-- `Nav.astro`: sticky-on-scroll, simple — `Work`, `About`, `Writing` (only if writing exists), `Contact`. 44 px touch targets.
+- `Nav.astro`: sticky-on-scroll, simple — `Work`, `About`, `Contact`. 44 px touch targets.
 - `Footer.astro`: email, social, "©︎ Matt {year}", colophon line referencing the stack.
 - `Prose.astro`: wraps MDX content with `measure-prose` width, headings type scale from DESIGN.md, no `prose` plugin (we own the styles).
 - `Figure.astro`: `<picture>` + sources for Cloudflare Images variants, eager-loaded only for above-the-fold hero, lazy for the rest.
@@ -236,16 +231,9 @@ Three things to internalize before writing components:
 
 **Done when:** Both pages typecheck and pass Lighthouse a11y ≥ 95.
 
-### M6 — Writing + RSS (optional)
+### M6 — Reserved
 
-**Files:** `src/content/writing/`, `src/pages/writing/index.astro`, `src/pages/writing/[...slug].astro`, `src/pages/rss.xml.ts`
-
-**Behavior:**
-- Same MDX + Zod pattern as `work`.
-- RSS via `@astrojs/rss`.
-- If no writing entries exist, hide the Writing nav link automatically.
-
-**Done when:** RSS validates (W3C feed validator), `/writing` page renders entries.
+No scope currently assigned.
 
 ### M7 — Cloudflare Images integration
 
@@ -300,7 +288,7 @@ Three things to internalize before writing components:
 
 Runtime:
 - `astro`
-- `@astrojs/mdx`, `@astrojs/sitemap`, `@astrojs/rss`, `@astrojs/check`
+- `@astrojs/mdx`, `@astrojs/sitemap`, `@astrojs/check`
 - `tailwindcss` (v4)
 - `astro-icon`, `@iconify-json/lucide` (icon set — minimal subset only)
 
@@ -350,7 +338,7 @@ If any gate fails after the implementation step, **stop** and either fix or open
 | Date | Milestone | Note |
 |---|---|---|
 | YYYY-MM-DD | — | initial plan written |
-| 2026-05-23 | M0-M7 implementation pass | Scaffolded Astro/Tailwind/MDX portfolio from DESIGN.md, added layout primitives, work/about/contact/writing routes, Cloudflare Images wrapper with local placeholders, and CI skeleton. Build/typecheck/design lint/format/test pass locally. |
+| 2026-05-23 | M0-M7 implementation pass | Scaffolded Astro/Tailwind/MDX portfolio from DESIGN.md, added layout primitives, work/about/contact routes, Cloudflare Images wrapper with local placeholders, and CI skeleton. Build/typecheck/design lint/format/test pass locally. |
 
 ### Surprises & discoveries
 - *(none yet)*
@@ -372,7 +360,7 @@ When `AGENTS.md` is created in M0, copy this concise block in:
 - Never add React/Vue/Svelte. Islands only on real interactivity need.
 - A11y: WCAG 2.2 AA, 44px touch min, full keyboard path, `prefers-reduced-motion` respected.
 - Perf budgets: home ≤ 250 KB, case ≤ 600 KB (sans hero); LCP ≤ 1.5s mobile.
-- Content lives in `src/content/{work,writing}` as MDX with Zod-validated frontmatter.
+- Content lives in `src/content/work` as MDX with Zod-validated frontmatter.
 - Images: Cloudflare Images via `<Figure>`; never raw `<img>` for case-study assets.
 - Definition of done: all gates in PLAN.md §7 green.
 ```

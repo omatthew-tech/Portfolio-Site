@@ -1,29 +1,30 @@
 ---
-import { getCollection } from "astro:content";
-
 const pathname = Astro.url.pathname;
-const writingEntries = await getCollection("writing", ({ data }) => import.meta.env.DEV || !data.draft);
-const hasWriting = writingEntries.length > 0;
 
 const links = [
   { href: "/work/", label: "Work", show: true },
   { href: "/about/", label: "About", show: true },
-  { href: "/writing/", label: "Writing", show: hasWriting },
   { href: "/contact/", label: "Contact", show: true },
 ].filter((link) => link.show);
 
-const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
 ---
 
 <header class="site-nav">
   <div class="site-container nav-inner">
     <a class="brand" href="/" aria-label="Matt home">Matt<span>.</span></a>
     <nav aria-label="Primary navigation">
-      {links.map((link) => (
-        <a href={link.href} aria-current={isActive(link.href) ? "page" : undefined}>
-          {link.label}
-        </a>
-      ))}
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={isActive(link.href) ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
     </nav>
   </div>
 </header>
@@ -41,7 +42,7 @@ const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.s
   .nav-inner {
     align-items: center;
     display: flex;
-    gap: 1rem;
+    gap: var(--spacing-200);
     justify-content: space-between;
     min-height: 72px;
   }
@@ -66,14 +67,14 @@ const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.s
   nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 0.75rem;
+    gap: var(--spacing-050) var(--spacing-150);
     justify-content: flex-end;
   }
 
   nav a {
-    border-block-end: 2px solid transparent;
+    border-block-end: var(--spacing-025) solid transparent;
     font-size: 0.9375rem;
-    padding-inline: 0.25rem;
+    padding-inline: var(--spacing-050);
   }
 
   nav a[aria-current="page"] {
@@ -81,15 +82,8 @@ const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.s
   }
 
   @media (max-width: 28rem) {
-    .nav-inner {
-      align-items: start;
-      flex-direction: column;
-      gap: 0.25rem;
-      padding-block: 0.75rem;
-    }
-
     nav {
-      justify-content: flex-start;
+      column-gap: var(--spacing-075);
     }
   }
 </style>
