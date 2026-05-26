@@ -3,18 +3,22 @@ import Base from "@/layouts/Base.astro";
 import { site } from "@/lib/site";
 ---
 
-<Base title="Contact" description="Contact Matt for UX design work, collaboration, and portfolio inquiries.">
+<Base
+  title="Contact"
+  description="Contact Matt for UX design work, collaboration, and portfolio inquiries."
+>
   <section class="site-container contact-page">
     <div>
       <h1 class="display-lg">Let's talk through the work.</h1>
       <p class="body-lg">
-        The fastest path is email. Send a note with the product context, team shape, and what kind of UX problem you are
-        trying to solve.
+        Reach out with the product context, team shape, and what kind of UX
+        problem you are trying to solve.
       </p>
     </div>
     <div class="contact-actions" aria-label="Contact links">
-      <a class="button button-primary" href={`mailto:${site.email}`}>Email Matt</a>
-      <a class="button button-secondary" href={site.socials.linkedin}>LinkedIn</a>
+      <a class="button button-secondary" href={site.socials.linkedin}
+        >LinkedIn</a
+      >
     </div>
   </section>
 </Base>

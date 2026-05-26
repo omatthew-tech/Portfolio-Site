@@ -1,98 +1,237 @@
 ---
-import ContactCTA from "@/components/ContactCTA.astro";
+import Figure from "@/components/Figure.astro";
 import Base from "@/layouts/Base.astro";
+
+const photos = [
+  {
+    src: "/images/about/matt-studio-portrait.webp",
+    alt: "Matt smiling in a tan jacket.",
+    width: 720,
+    height: 720,
+    className: "photo-primary",
+  },
+  {
+    src: "/images/about/matt-with-camera.webp",
+    alt: "Matt photographing outside with a camera.",
+    width: 720,
+    height: 720,
+    className: "photo-secondary",
+  },
+  {
+    src: "/images/about/dog-on-blanket.webp",
+    alt: "Matt's dog sitting on a striped blanket.",
+    width: 560,
+    height: 560,
+    className: "photo-support",
+  },
+  {
+    src: "/images/about/courtroom-set.webp",
+    alt: "Matt standing at a courtroom set podium.",
+    width: 560,
+    height: 560,
+    className: "photo-support",
+  },
+  {
+    src: "/images/about/pickleball-medals.webp",
+    alt: "Matt and a teammate with pickleball medals.",
+    width: 560,
+    height: 560,
+    className: "photo-support",
+  },
+];
 ---
 
-<Base title="About" description="About Matt, a UX designer focused on product clarity, research, and systems.">
-  <section class="site-container about-hero">
-    <h1 class="display-lg">I turn ambiguity into product decisions teams can trust.</h1>
+<Base
+  title="About"
+  description="About Matt, a product designer currently in Savannah, GA."
+>
+  <section class="site-container about-page" aria-labelledby="about-title">
+    <div class="photo-grid" aria-label="Photos from Matt's work and life">
+      {
+        photos.map((photo, index) => (
+          <div class:list={["about-photo", photo.className]}>
+            <Figure
+              src={photo.src}
+              alt={photo.alt}
+              width={photo.width}
+              height={photo.height}
+              loading={index < 2 ? "eager" : "lazy"}
+              priority={index === 0}
+            />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="about-intro prose-flow">
+      <h1 id="about-title" class="h2">
+        Hi! I&rsquo;m Matt, a product designer, currently in Savannah, GA
+        (previously LA and Austin).
+      </h1>
+      <p>
+        I came to design from a background in tech sales, photography, and
+        computer science.
+      </p>
+    </div>
   </section>
 
-  <section class="site-container about-grid" aria-label="About Matt">
+  <section class="site-container about-story" aria-label="Matt's story">
     <div class="prose-flow">
+      <h2>My Story</h2>
       <p>
-        Matt is a UX designer who works across discovery, interaction design, and product systems. His practice starts
-        with evidence, narrows into crisp decisions, and ends in interfaces that are easier for teams to maintain.
+        When I was in high school, I convinced my mom to sign up for
+        <a href="http://UserTesting.com">UserTesting.com</a> (you had to be at least
+        18). I thought getting paid to try new apps and prototypes was the coolest
+        thing.
       </p>
       <p>
-        He is especially interested in complex workflows: dashboards, internal tools, commerce paths, and research-heavy
-        product surfaces where clarity has direct business value.
+        I also used to design landing pages with WordPress to advertise CPA/CPL
+        offers from MaxBounty. Then I used a tool called FollowLiker to automate
+        social media outreach. I thought I was pretty cool waking up to a sale
+        or two.
       </p>
-    </div>
-    <div class="cv-panel" aria-labelledby="cv-title">
-      <h2 id="cv-title" class="h3">Experience</h2>
-      <dl>
-        <div>
-          <dt>2024 - Present</dt>
-          <dd>UX designer, product systems</dd>
-        </div>
-        <div>
-          <dt>2021 - 2024</dt>
-          <dd>Product designer, research-led workflows</dd>
-        </div>
-        <div>
-          <dt>2019 - 2021</dt>
-          <dd>UX generalist, web and app experiences</dd>
-        </div>
-      </dl>
+      <p>
+        Then I went to Virginia Tech for a bachelor&rsquo;s in Business
+        Information Technology. I was our Web Development Club&rsquo;s outreach
+        chair. I also started Blockchain at Virginia Tech and crafted our
+        website.
+        <a href="https://schedule.sxsw.com/2020/contributors/2022774"
+          >Dylan Love</a
+        >, the former head of content for Cointelegraph, happened to find my
+        website and hired me to write press releases, articles, and news for
+        crypto-related startups. During college, I also interned for Samsung and
+        worked for the CEO of a tech startup called
+        <a href="http://Empiric.io">Empiric.io</a>, doing sales engineering and
+        sales.
+      </p>
+      <p>
+        I graduated and started working in data center/cloud sales at Dell in
+        Austin. Surprisingly, the only sales tools available were Salesforce and
+        ZoomInfo. So, with my VBA skills from college, I designed an automated
+        email management system in Excel. My teammates and I could import
+        contacts from ZoomInfo, create custom messages, email customer lists,
+        track sent emails, and send future emails. It saved my teammates hours
+        and led to huge sales opportunities.
+      </p>
+      <p>
+        During that time, I visited LA twice and fell in love. Unfortunately,
+        Dell didn&rsquo;t have any openings there, so I put everything in my
+        Prius (including my dog) and left Dell on good terms. In LA, I had a few
+        <a href="https://www.tiktok.com/@newswithmatty">TikToks</a> go viral and happened
+        to meet a lifelong fashion photographer named Ivy. We became best friends.
+        She and I worked on many fashion photography shoots, some of which were published
+        in Malvie, The Untitled Magazine, and Vogue. I also got signed as a commercial
+        actor with
+        <a href="http://TheOptionAgency.com">TheOptionAgency.com</a>.
+      </p>
+
+      <h2>Why I Love Design</h2>
+      <p>
+        I learned to empathize deeply while working with customers, craft
+        creative solutions in LA, and communicate or build technically while
+        studying computer science. So, I transitioned my career to product
+        design. I started a usability testing platform called
+        <a href="http://Test4Test.io">Test4Test.io</a>, where my design
+        decisions led to a 23% user satisfaction increase and Test4Test&rsquo;s
+        first paid customer.
+      </p>
+      <p class="story-cta">
+        <a
+          class="button button-primary"
+          href="/work/test4test/"
+          aria-label="Read more about the Test4Test case study"
+        >
+          Read more
+        </a>
+      </p>
     </div>
   </section>
-
-  <ContactCTA />
 </Base>
 
 <style>
-  .about-hero {
-    padding-block: var(--gap-hero) var(--gap-section);
+  .about-page {
+    padding-block: var(--gap-section);
   }
 
-  .about-hero h1 {
-    margin: 0;
-    max-width: 13ch;
-  }
-
-  .about-grid {
+  .photo-grid {
     display: grid;
-    gap: var(--gap-section);
+    gap: var(--spacing-150);
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    margin-inline: auto;
+    max-width: min(100%, calc(var(--measure-prose) - var(--spacing-1600)));
   }
 
-  .cv-panel {
+  .about-photo {
+    min-width: 0;
+  }
+
+  .photo-primary,
+  .photo-secondary {
+    grid-column: span 3;
+  }
+
+  .photo-support {
+    grid-column: span 2;
+  }
+
+  .about-photo :global(.figure),
+  .about-photo :global(picture) {
+    height: 100%;
+  }
+
+  .about-photo :global(.figure img) {
+    aspect-ratio: 1;
     background: var(--color-surface);
     border: 1px solid var(--color-surface-muted);
     border-radius: var(--radius-lg);
-    padding: var(--pad-card);
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
   }
 
-  .cv-panel h2 {
+  .about-intro {
+    margin-block-start: var(--gap-section);
+    margin-inline: auto;
+  }
+
+  .about-intro h1 {
     margin: 0;
   }
 
-  .cv-panel dl {
-    display: grid;
-    gap: 1rem;
-    margin: 1.25rem 0 0;
+  .about-story {
+    padding-block: 0 var(--gap-hero);
   }
 
-  .cv-panel div {
-    border-block-start: 1px solid var(--color-surface-muted);
-    display: grid;
-    gap: 0.35rem;
-    padding-block-start: 1rem;
+  .about-story .prose-flow {
+    margin-inline: auto;
   }
 
-  .cv-panel dt {
-    color: var(--color-muted);
-    font-size: 0.875rem;
+  .story-cta {
+    margin-block-start: var(--gap-content-block);
   }
 
-  .cv-panel dd {
-    margin: 0;
+  .story-cta .button {
+    min-width: var(--spacing-1600);
   }
 
-  @media (min-width: 56rem) {
-    .about-grid {
-      align-items: start;
-      grid-template-columns: minmax(0, 1fr) 22rem;
+  @media (max-width: 48rem) {
+    .photo-grid {
+      gap: var(--spacing-100);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .photo-primary,
+    .photo-secondary,
+    .photo-support {
+      grid-column: span 1;
+    }
+
+    .photo-support:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .photo-support:last-child :global(.figure img) {
+      aspect-ratio: 16 / 10;
     }
   }
 </style>

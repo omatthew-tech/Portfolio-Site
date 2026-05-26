@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import ContactCTA from "@/components/ContactCTA.astro";
 import Hero from "@/components/Hero.astro";
 import WorkCard from "@/components/WorkCard.astro";
 import Base from "@/layouts/Base.astro";
@@ -12,7 +11,11 @@ const work = (await getCollection("work", ({ data }) => !data.draft))
 
 <Base>
   <Hero />
-  <section id="selected-work" class="site-container selected-work" aria-labelledby="selected-work-title">
+  <section
+    id="selected-work"
+    class="site-container selected-work"
+    aria-labelledby="selected-work-title"
+  >
     <div class="section-heading">
       <h2 id="selected-work-title" class="h1">Case studies</h2>
     </div>
@@ -20,7 +23,6 @@ const work = (await getCollection("work", ({ data }) => !data.draft))
       {work.map((entry) => <WorkCard entry={entry} />)}
     </div>
   </section>
-  <ContactCTA />
 </Base>
 
 <style>
