@@ -8,6 +8,6 @@ export const site = {
   location: "United States",
   role: "UX designer",
   socials: {
-    linkedin: "https://www.linkedin.com/in/matt/",
+    linkedin: "https://www.linkedin.com/in/matt-ozoroski-2610921b7/",
   },
 };

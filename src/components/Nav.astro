@@ -1,10 +1,24 @@
 ---
 const pathname = Astro.url.pathname;
 
-const links = [
+type NavLink = {
+  href: string;
+  label: string;
+  rel?: string;
+  show: boolean;
+  target?: string;
+};
+
+const links: NavLink[] = [
   { href: "/work/", label: "Work", show: true },
   { href: "/about/", label: "About", show: true },
-  { href: "/contact/", label: "Contact", show: true },
+  {
+    href: "https://drive.google.com/file/d/12qSKganAshXxUyZrawPhr-UM619ZgZB9/view?usp=sharing",
+    label: "Resume",
+    rel: "noreferrer",
+    show: true,
+    target: "_blank",
+  },
 ].filter((link) => link.show);
 
 const isActive = (href: string) =>
@@ -20,6 +34,8 @@ const isActive = (href: string) =>
           <a
             href={link.href}
             aria-current={isActive(link.href) ? "page" : undefined}
+            rel={link.rel}
+            target={link.target}
           >
             {link.label}
           </a>
