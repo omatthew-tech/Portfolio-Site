@@ -1,7 +1,7 @@
 ---
 interface Props {
   columns?: 2 | 3 | 4;
-  variant?: "default" | "compact" | "mosaic" | "strip";
+  variant?: "default" | "compact" | "mosaic" | "strip" | "phone-showcase";
 }
 
 const { columns = 2, variant = "default" } = Astro.props;
@@ -14,6 +14,7 @@ const { columns = 2, variant = "default" } = Astro.props;
     variant === "compact" && "figure-group-compact",
     variant === "mosaic" && "figure-group-mosaic",
     variant === "strip" && "figure-group-strip",
+    variant === "phone-showcase" && "figure-group-phone-showcase",
   ]}
 >
   <slot />
@@ -37,24 +38,30 @@ const { columns = 2, variant = "default" } = Astro.props;
 
   .figure-group-compact,
   .figure-group-mosaic,
-  .figure-group-strip {
+  .figure-group-strip,
+  .figure-group-phone-showcase {
     gap: var(--spacing-200);
-  }
-
-  .figure-group-compact :global(.figure-screenshot) {
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-075);
   }
 
   .figure-group-compact :global(.figure-screenshot),
   .figure-group-mosaic :global(.figure-screenshot),
-  .figure-group-strip :global(.figure-screenshot) {
-    border-radius: var(--radius-lg);
+  .figure-group-strip :global(.figure-screenshot),
+  .figure-group-phone-showcase :global(.figure-screenshot) {
+    border-radius: var(--radius-md);
     padding: var(--spacing-075);
+  }
+
+  .figure-group-phone-showcase {
+    align-items: start;
+    max-width: min(100%, calc(var(--spacing-1600) * 7.5));
   }
 
   .figure-group-compact :global(.figure-screenshot img) {
     max-height: min(46vh, calc(var(--spacing-1600) * 3.25));
+  }
+
+  .figure-group-phone-showcase :global(.figure-screenshot img) {
+    max-height: min(68vh, calc(var(--spacing-1600) * 5));
   }
 
   .figure-group-mosaic :global(.figure-screenshot img) {
@@ -80,7 +87,8 @@ const { columns = 2, variant = "default" } = Astro.props;
 
   .figure-group-compact :global(figcaption),
   .figure-group-mosaic :global(figcaption),
-  .figure-group-strip :global(figcaption) {
+  .figure-group-strip :global(figcaption),
+  .figure-group-phone-showcase :global(figcaption) {
     margin-block-start: var(--spacing-100);
   }
 

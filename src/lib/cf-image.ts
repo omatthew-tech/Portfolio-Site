@@ -42,7 +42,8 @@ const placeholderMap: Record<string, string> = {
     "/images/cases/test4test/test4test-resume-test-button.webp",
   "test4test-answer-saved-toast":
     "/images/cases/test4test/test4test-answer-saved-toast.webp",
-  "oneatatime-cover": "/images/cases/OneAtATime%20Dating/oneatatime-cover.webp",
+  "oneatatime-cover":
+    "/images/cases/OneAtATime%20Dating/oneatatime-cover-v2.webp",
   "oneatatime-reddit-thread":
     "/images/cases/OneAtATime%20Dating/oneatatime-reddit-thread.webp",
   "oneatatime-reddit-archived-dating":

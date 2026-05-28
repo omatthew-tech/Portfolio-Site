@@ -1,6 +1,6 @@
 ---
 title: "OneAtATime Dating"
-summary: "An iOS dating concept that slows matching down, encourages deeper discovery, and makes interest easier to read."
+summary: "Designing a dating app exclusively for introverts"
 role: "Founder, product designer, and builder"
 company: "OneAtATime Dating"
 year: 2026
@@ -14,11 +14,11 @@ draft: false
 nda: false
 ---
 
-## The Story
+OneAtATime Dating is an introverted-styled iOS mobile dating app. Instead of optimizing for as many swipes and matches as possible, the experience focuses on getting to know someone more in depth.
 
-OneAtATime Dating is an introvert-centered iOS dating app. Instead of optimizing for endless swipes, stacked matches, and shallow first impressions, the product focuses on helping people get to know one potential match at a time.
+## Problem
 
-Traditional dating apps often ask introverted users to keep up with multiple conversations, guess whether someone is actually interested, and make quick judgments from a few photos. The product question became: what would dating feel like if the interface protected attention instead of draining it?
+There isn't a "dating app for introverts." Traditional dating apps like Tinder, Bumble and Hinge drain an introvert's social battery. Keeping up with multiple conversations, not getting to know someone or their true intentions and guessing if someone actually likes you is a lot to deal with.
 
 <FigureGroup columns={3} variant="compact">
   <Figure
@@ -46,9 +46,7 @@ Traditional dating apps often ask introverted users to keep up with multiple con
   />
 </FigureGroup>
 
-## Research Signals
-
-I surveyed nine potential users and launched a landing page to gauge whether the idea felt different enough from Tinder, Bumble, and Hinge. The strongest signal was not that people wanted another dating app. It was that they wanted a different pace and a clearer reason to believe the experience would not become another loop of surface-level browsing.
+I also surveyed 9 potential users and launched a landing page to gauge interest.
 
 <FigureGroup columns={2} variant="mosaic">
   <Figure
@@ -68,10 +66,6 @@ I surveyed nine potential users and launched a landing page to gauge whether the
   />
 </FigureGroup>
 
-<Quote attribution="Survey response">
-  Like apps that get to the heart, not just hobbies.
-</Quote>
-
 <Figure
   id="oneatatime-formspree-signups"
   alt="Formspree inbox showing a series of new submissions from the OneAtATime landing page."
@@ -83,7 +77,7 @@ I surveyed nine potential users and launched a landing page to gauge whether the
 
 ## Design Iteration
 
-I explored multiple Figma prototypes before building the product: profile-card layouts, expanded profile views, match states, and different ways to reveal more information over time. The early concepts validated the core direction, but they also showed that the interaction model needed to make the product difference obvious in the first few seconds.
+I explored multiple Figma prototypes before building the product, including profile card layouts, expanded profile views, match states, and different ways to reveal more information over time. I also iterated on the chat timer, testing different placements and visual treatments so the 24-hour timer wouldn't feel overwhelming, but would still ensure the user could gauge another user's interest depending on if they let 24 hours go by or not.
 
 <Figure
   id="oneatatime-figma-prototypes"
@@ -94,8 +88,6 @@ I explored multiple Figma prototypes before building the product: profile-card l
   size="xl"
 />
 
-The chat timer went through a focused redesign pass. It needed to help users gauge interest without making the conversation feel like a countdown clock. I tested placements, icon treatments, and explicit time labels so the signal would be visible without becoming the whole experience.
-
 <Figure
   id="oneatatime-timer-redesigns"
   alt="A Figma board showing six chat timer redesign options across OneAtATime message screens."
@@ -105,11 +97,11 @@ The chat timer went through a focused redesign pass. It needed to help users gau
   size="xl"
 />
 
-## The Solution
+## Solution
 
-The product uses a one-at-a-time matching flow where users progressively reveal more profile information, prompts, and photos. "Likes" became "Reveals," shifting the interaction away from instant approval and toward curiosity.
+I designed a one-at-a-time matching flow where users discover more about other users by revealing more profile information, prompts, and photos. This way, users are incentivized to get to know a potential match more in depth, aren't overwhelmed with multiple matches, and can focus on a more enjoyable dating experience.
 
-<FigureGroup columns={3} variant="compact">
+<FigureGroup columns={3} variant="phone-showcase">
   <Figure
     id="oneatatime-reveal-profile"
     alt="A OneAtATime profile screen with a Tap Reveal to unlock button over a partially hidden profile."
@@ -135,27 +127,15 @@ The product uses a one-at-a-time matching flow where users progressively reveal 
   />
 </FigureGroup>
 
-<CaseTextPair>
-  <Fragment slot="primary">
-    Replacing "Likes" with "Reveals" made the primary action more specific to
-    the product promise. The user is not just approving a profile. They are
-    choosing to learn more about one person.
-  </Fragment>
-
-  <Fragment slot="secondary">
-    The ocean-inspired visual identity supported that same idea: calm,
-    gradual discovery, and depth. It gave the product a distinct emotional
-    texture without competing with the actual profile content.
-  </Fragment>
-</CaseTextPair>
-
 ## Key Product Decisions
 
-- Chatting with matches reveals more profile information, prompts, and photos, giving users a reason to keep the conversation going.
-- The interest timer helps users understand whether someone is engaged without relying on ambiguous silence.
-- The landing page was refined to explain the product difference sooner and show the app experience more clearly.
-- The sign-up flow was shortened, reducing incomplete signups and helping more users reach the active product.
-- Users can reach the dating page before answering every profile question, then complete a few more prompts when they are ready to match.
+- Replaced traditional dating app "Likes" with "Reveals" so users are more incentivized to get to know someone on a deeper level.
+- Chatting with matches reveals more profile information, prompts, and photos, which keeps the conversation going and encourages users to have more in-depth conversations.
+- Added an "interest timer," so users can accurately gauge if someone's actually interested in them or not.
+- Created an ocean-inspired visual identity to reflect getting to know someone more in-depth and on a deeper level, while keeping things calm.
+- Refined the landing page to better explain the product's differentiation and show the app experience more clearly.
+- Reduced the amount of sign up questions, increasing the amount of active users and reducing incomplete sign ups.
+- Users can access the dating page and are asked to complete a few more questions before they can match with another user, increasing the amount of time spent on the app and incentivizing users to return.
 
 <FigureGroup columns={2} variant="compact">
   <Figure
@@ -174,9 +154,3 @@ The product uses a one-at-a-time matching flow where users progressively reveal 
     variant="screenshot"
   />
 </FigureGroup>
-
-## Outcome
-
-The result was a product experience with a clearer point of view: fewer simultaneous matches, more intentional reveals, and better signals around interest. The research and landing-page tests also gave me a sharper explanation of the product: not "another dating app for introverts," but a calmer way to discover one person at a time.
-
-This project later became the starting point for Test4Test, because building OneAtATime made the need for faster, reciprocal user feedback painfully clear.
