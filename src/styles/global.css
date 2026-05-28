@@ -311,6 +311,16 @@ button:focus-visible {
   margin-block-start: var(--gap-prose-heading-copy);
 }
 
+.prose-flow h2 + ul,
+.prose-flow h2 + ol {
+  margin-block-start: var(--spacing-400);
+}
+
+.prose-flow h3 + ul,
+.prose-flow h3 + ol {
+  margin-block-start: var(--spacing-300);
+}
+
 .prose-flow ul {
   display: grid;
   gap: var(--spacing-150);

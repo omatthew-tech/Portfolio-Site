@@ -32,6 +32,7 @@ const { entry } = Astro.props;
     --case-content-max: calc(var(--spacing-1600) * 9);
     --case-copy-gap: var(--gap-prose-paragraph);
     --case-heading-copy-gap: var(--gap-prose-heading-copy);
+    --case-heading-list-gap: var(--spacing-300);
     --case-content-gap: var(--gap-content-block);
     --case-media-gap: var(--gap-section);
     --case-section-gap: var(--gap-hero);
@@ -86,6 +87,16 @@ const { entry } = Astro.props;
   :global(.case-body .prose-flow > h2 + p),
   :global(.case-body .prose-flow > h3 + p) {
     margin-block-start: var(--case-heading-copy-gap);
+  }
+
+  :global(.case-body .prose-flow > h2 + ul),
+  :global(.case-body .prose-flow > h2 + ol) {
+    margin-block-start: var(--case-heading-list-gap);
+  }
+
+  :global(.case-body .prose-flow > h3 + ul),
+  :global(.case-body .prose-flow > h3 + ol) {
+    margin-block-start: var(--case-copy-gap);
   }
 
   :global(.case-body .prose-flow > p + h3),
@@ -145,6 +156,7 @@ const { entry } = Astro.props;
     .case-body {
       --case-copy-gap: var(--spacing-300);
       --case-heading-copy-gap: var(--spacing-250);
+      --case-heading-list-gap: var(--spacing-400);
     }
 
     :global(.case-body .prose-flow) {
