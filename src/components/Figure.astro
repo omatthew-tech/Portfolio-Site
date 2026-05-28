@@ -87,6 +87,10 @@ const srcset = id
     max-width: var(--figure-max);
   }
 
+  .figure picture {
+    width: 100%;
+  }
+
   .figure img {
     aspect-ratio: 16 / 10;
     background: var(--color-surface);
@@ -139,6 +143,7 @@ const srcset = id
     border: 1px solid var(--color-surface-muted);
     margin-inline: auto;
     max-height: min(72vh, 48rem);
+    max-width: 100%;
     object-fit: contain;
     width: auto;
   }

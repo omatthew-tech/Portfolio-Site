@@ -93,7 +93,9 @@ const { title, summary, cover, role, company, year } = entry.data;
   }
 
   .case-header h1 {
-    max-width: 18ch;
+    max-width: min(100%, 13ch);
+    overflow-wrap: anywhere;
+    text-wrap: balance;
   }
 
   .case-header .body-lg {
@@ -158,6 +160,10 @@ const { title, summary, cover, role, company, year } = entry.data;
   @media (min-width: 64rem) {
     .case-header-band {
       padding-block-start: calc(var(--gap-hero) * 1.25);
+    }
+
+    .case-header h1 {
+      max-width: 18ch;
     }
 
     .case-meta {
