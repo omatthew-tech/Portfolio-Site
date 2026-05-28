@@ -43,7 +43,7 @@ const placeholderMap: Record<string, string> = {
   "test4test-answer-saved-toast":
     "/images/cases/test4test/test4test-answer-saved-toast.webp",
   "oneatatime-cover":
-    "/images/cases/OneAtATime%20Dating/oneatatime-cover-v2.webp",
+    "/images/cases/OneAtATime%20Dating/oneatatime-cover-v6.webp",
   "oneatatime-reddit-thread":
     "/images/cases/OneAtATime%20Dating/oneatatime-reddit-thread.webp",
   "oneatatime-reddit-archived-dating":
@@ -61,15 +61,15 @@ const placeholderMap: Record<string, string> = {
   "oneatatime-timer-redesigns":
     "/images/cases/OneAtATime%20Dating/oneatatime-timer-redesigns.webp",
   "oneatatime-onboarding":
-    "/images/cases/OneAtATime%20Dating/oneatatime-onboarding.webp",
+    "/images/cases/OneAtATime%20Dating/oneatatime-onboarding-framed.webp",
   "oneatatime-reveal-profile":
-    "/images/cases/OneAtATime%20Dating/oneatatime-reveal-profile.webp",
+    "/images/cases/OneAtATime%20Dating/oneatatime-reveal-profile-framed.webp",
   "oneatatime-match-sent":
-    "/images/cases/OneAtATime%20Dating/oneatatime-match-sent.webp",
+    "/images/cases/OneAtATime%20Dating/oneatatime-match-sent-framed.webp",
   "oneatatime-profile-message":
-    "/images/cases/OneAtATime%20Dating/oneatatime-profile-message.webp",
+    "/images/cases/OneAtATime%20Dating/oneatatime-profile-message-framed.webp",
   "oneatatime-chat-timer":
-    "/images/cases/OneAtATime%20Dating/oneatatime-chat-timer.webp",
+    "/images/cases/OneAtATime%20Dating/oneatatime-chat-timer-framed.webp",
 };
 
 export function cfImage(id: string, options: CfImageOptions = {}) {

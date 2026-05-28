@@ -51,6 +51,18 @@ const { columns = 2, variant = "default" } = Astro.props;
     padding: var(--spacing-075);
   }
 
+  .figure-group :global(.figure-screenshot.figure-bare) {
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+
+  .figure-group :global(.figure-screenshot.figure-bare img) {
+    background: transparent;
+    border-radius: 0;
+    filter: drop-shadow(0 16px 30px rgba(15, 30, 35, 0.18));
+  }
+
   .figure-group-phone-showcase {
     align-items: start;
     max-width: min(100%, calc(var(--spacing-1600) * 7.5));

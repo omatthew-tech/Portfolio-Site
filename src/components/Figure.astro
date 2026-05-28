@@ -13,6 +13,7 @@ interface Props {
   sizes?: string;
   bleed?: "none" | "wide";
   variant?: "default" | "screenshot";
+  card?: boolean;
   size?: "sm" | "md" | "lg" | "xl" | "full";
   align?: "left" | "center" | "right";
 }
@@ -29,6 +30,7 @@ const {
   sizes = "(min-width: 80rem) 72rem, calc(100vw - 2rem)",
   bleed = "none",
   variant = "default",
+  card = true,
   size = "full",
   align = "left",
 } = Astro.props;
@@ -50,6 +52,7 @@ const srcset = id
   class:list={[
     "figure",
     variant === "screenshot" && "figure-screenshot",
+    variant === "screenshot" && !card && "figure-bare",
     bleed === "wide" && "figure-wide",
     `figure-size-${size}`,
     `figure-align-${align}`,
@@ -148,6 +151,18 @@ const srcset = id
     max-width: 100%;
     object-fit: contain;
     width: auto;
+  }
+
+  .figure-screenshot.figure-bare {
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+
+  .figure-screenshot.figure-bare img {
+    background: transparent;
+    border-radius: 0;
+    filter: drop-shadow(0 16px 30px rgba(15, 30, 35, 0.18));
   }
 
   figcaption {

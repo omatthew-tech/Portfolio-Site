@@ -311,13 +311,24 @@ button:focus-visible {
   margin-block-start: var(--gap-prose-heading-copy);
 }
 
-.prose-flow ul,
+.prose-flow ul {
+  display: grid;
+  gap: var(--spacing-150);
+  list-style: disc;
+  padding-inline-start: var(--spacing-300);
+}
+
 .prose-flow ol {
-  padding-inline-start: 1.4rem;
+  padding-inline-start: var(--spacing-300);
+}
+
+.prose-flow li::marker {
+  color: var(--color-muted);
+  font-size: 0.9em;
 }
 
 .prose-flow li + li {
-  margin-block-start: var(--gap-stack-tight);
+  margin-block-start: 0;
 }
 
 .prose-flow code {
