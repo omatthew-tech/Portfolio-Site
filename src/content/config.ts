@@ -5,6 +5,15 @@ const coverSchema = z.object({
   alt: z.string(),
 });
 
+const coverVideoSchema = z.object({
+  src: z.string(),
+  poster: z.string().optional(),
+  type: z.string().default("video/webm"),
+  label: z.string().optional(),
+  width: z.number().default(1280),
+  height: z.number().default(720),
+});
+
 const work = defineCollection({
   type: "content",
   schema: z.object({
@@ -15,6 +24,7 @@ const work = defineCollection({
     year: z.number(),
     tags: z.array(z.string()).default([]),
     cover: coverSchema,
+    coverVideo: coverVideoSchema.optional(),
     featured: z.boolean().default(false),
     order: z.number().default(100),
     draft: z.boolean().default(false),

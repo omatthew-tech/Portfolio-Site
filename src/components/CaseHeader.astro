@@ -1,4 +1,5 @@
 ---
+import CaseVideo from "@/components/CaseVideo.astro";
 import Figure from "@/components/Figure.astro";
 import type { CollectionEntry } from "astro:content";
 
@@ -7,7 +8,7 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, summary, cover, role, company, year } = entry.data;
+const { title, summary, cover, coverVideo, role, company, year } = entry.data;
 ---
 
 <header class="case-header">
@@ -39,14 +40,27 @@ const { title, summary, cover, role, company, year } = entry.data;
     </div>
   </div>
   <div class="site-container-wide case-media-container">
-    <Figure
-      id={cover.id}
-      alt={cover.alt}
-      width={1600}
-      height={1000}
-      loading="eager"
-      priority
-    />
+    {
+      coverVideo ? (
+        <CaseVideo
+          src={coverVideo.src}
+          poster={coverVideo.poster}
+          type={coverVideo.type}
+          label={coverVideo.label}
+          width={coverVideo.width}
+          height={coverVideo.height}
+        />
+      ) : (
+        <Figure
+          id={cover.id}
+          alt={cover.alt}
+          width={1600}
+          height={1000}
+          loading="eager"
+          priority
+        />
+      )
+    }
   </div>
 </header>
 

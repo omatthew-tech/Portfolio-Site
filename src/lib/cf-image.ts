@@ -43,7 +43,7 @@ const placeholderMap: Record<string, string> = {
   "test4test-answer-saved-toast":
     "/images/cases/test4test/test4test-answer-saved-toast.webp",
   "oneatatime-cover":
-    "/images/cases/OneAtATime%20Dating/oneatatime-cover-v6.webp",
+    "/images/cases/OneAtATime%20Dating/oneatatime-cover-v11.webp",
   "oneatatime-reddit-thread":
     "/images/cases/OneAtATime%20Dating/oneatatime-reddit-thread.webp",
   "oneatatime-reddit-archived-dating":
@@ -70,6 +70,18 @@ const placeholderMap: Record<string, string> = {
     "/images/cases/OneAtATime%20Dating/oneatatime-profile-message-framed.webp",
   "oneatatime-chat-timer":
     "/images/cases/OneAtATime%20Dating/oneatatime-chat-timer-framed.webp",
+  "mattyophotos-cover":
+    "/images/cases/MattyOphotos/cropped/mattyophotos-cover.jpg",
+  "mattyophotos-01": "/images/cases/MattyOphotos/cropped/mattyophotos-01.jpg",
+  "mattyophotos-02": "/images/cases/MattyOphotos/cropped/mattyophotos-02.jpg",
+  "mattyophotos-03": "/images/cases/MattyOphotos/cropped/mattyophotos-03.jpg",
+  "mattyophotos-04": "/images/cases/MattyOphotos/cropped/mattyophotos-04.jpg",
+  "mattyophotos-05": "/images/cases/MattyOphotos/cropped/mattyophotos-05.jpg",
+  "mattyophotos-06": "/images/cases/MattyOphotos/cropped/mattyophotos-06.jpg",
+  "mattyophotos-07": "/images/cases/MattyOphotos/cropped/mattyophotos-07.jpg",
+  "mattyophotos-08": "/images/cases/MattyOphotos/cropped/mattyophotos-08.jpg",
+  "mattyophotos-09": "/images/cases/MattyOphotos/cropped/mattyophotos-09.jpg",
+  "mattyophotos-10": "/images/cases/MattyOphotos/cropped/mattyophotos-10.jpg",
 };
 
 export function cfImage(id: string, options: CfImageOptions = {}) {

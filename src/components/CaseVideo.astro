@@ -1,0 +1,129 @@
+---
+interface Props {
+  src: string;
+  poster?: string;
+  type?: string;
+  label?: string;
+  width?: number;
+  height?: number;
+  autoplay?: boolean;
+  loop?: boolean;
+  preload?: "none" | "metadata" | "auto";
+}
+
+const {
+  src,
+  poster,
+  type = "video/webm",
+  label,
+  width = 1280,
+  height = 720,
+  autoplay = true,
+  loop = true,
+  preload = "metadata",
+} = Astro.props;
+---
+
+<figure class="case-video">
+  <video
+    data-case-video
+    data-src={src}
+    data-type={type}
+    class="case-video-media"
+    autoplay={autoplay}
+    muted={autoplay}
+    loop={loop}
+    playsinline
+    preload={preload}
+    poster={poster}
+    width={width}
+    height={height}
+    aria-label={label || undefined}
+    aria-hidden={label ? undefined : "true"}
+  >
+  </video>
+</figure>
+
+<script>
+  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const videos = Array.from(document.querySelectorAll("[data-case-video]"));
+
+  const loadVideo = (video: HTMLVideoElement) => {
+    if (video.dataset.loaded === "true" || !video.dataset.src) return;
+
+    const source = document.createElement("source");
+    source.src = video.dataset.src;
+    source.type = video.dataset.type ?? "video/webm";
+    video.append(source);
+    video.dataset.loaded = "true";
+    video.load();
+  };
+
+  const playVideo = (video: HTMLVideoElement) => {
+    if (motionQuery.matches) {
+      video.pause();
+      return;
+    }
+
+    loadVideo(video);
+    video.play().catch(() => {});
+  };
+
+  const observer =
+    "IntersectionObserver" in window
+      ? new IntersectionObserver(
+          (entries, activeObserver) => {
+            entries.forEach((entry) => {
+              if (!(entry.target instanceof HTMLVideoElement)) return;
+              if (!entry.isIntersecting) return;
+
+              playVideo(entry.target);
+              activeObserver.unobserve(entry.target);
+            });
+          },
+          { rootMargin: "200px" },
+        )
+      : undefined;
+
+  const syncMotionPreference = () => {
+    videos.forEach((video) => {
+      if (!(video instanceof HTMLVideoElement)) return;
+
+      if (motionQuery.matches) {
+        video.pause();
+        return;
+      }
+
+      if (observer && video.dataset.loaded !== "true") {
+        observer.observe(video);
+        return;
+      }
+
+      playVideo(video);
+    });
+  };
+
+  syncMotionPreference();
+  motionQuery.addEventListener("change", syncMotionPreference);
+</script>
+
+<style>
+  .case-video {
+    background: var(--color-neutral);
+    border: 1px solid var(--color-surface-muted);
+    border-radius: var(--radius-lg);
+    margin: 0;
+    overflow: hidden;
+    padding: var(--spacing-100);
+  }
+
+  .case-video-media {
+    aspect-ratio: 16 / 9;
+    background: var(--color-surface);
+    border-radius: var(--radius-md);
+    display: block;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+  }
+</style>
