@@ -89,6 +89,13 @@ const { entry } = Astro.props;
     margin-block-start: var(--case-heading-copy-gap);
   }
 
+  :global(.case-body .prose-flow > h2 + .figure),
+  :global(.case-body .prose-flow > h2 + .figure-group),
+  :global(.case-body .prose-flow > h2 + .compare),
+  :global(.case-body .prose-flow > h2 + .quote) {
+    margin-block-start: var(--case-heading-copy-gap);
+  }
+
   :global(.case-body .prose-flow > h2 + ul),
   :global(.case-body .prose-flow > h2 + ol) {
     margin-block-start: var(--case-heading-list-gap);
