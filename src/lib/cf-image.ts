@@ -6,9 +6,6 @@ type CfImageOptions = {
 };
 
 const placeholderMap: Record<string, string> = {
-  "discovery-map": "/images/placeholders/discovery-map.svg",
-  "checkout-flow": "/images/placeholders/checkout-flow.svg",
-  "insights-dashboard": "/images/placeholders/insights-dashboard.svg",
   "example-case": "/images/placeholders/discovery-map.svg",
   "test4test-cover": "/images/cases/test4test/test4test-cover.webp",
   "test4test-homepage": "/images/cases/test4test/Test4Test Homepage.png",

@@ -30,7 +30,7 @@ const urls =
     ? process.argv.slice(2)
     : [
         "http://127.0.0.1:4321/",
-        "http://127.0.0.1:4321/work/research-ops-hub/",
+        "http://127.0.0.1:4321/work/test4test/",
       ];
 
 const chromeOptions = [

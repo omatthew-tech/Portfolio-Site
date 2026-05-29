@@ -5,7 +5,7 @@
       "startServerReadyPattern": "serving dist at http://127.0.0.1:4321",
       "url": [
         "http://127.0.0.1:4321/",
-        "http://127.0.0.1:4321/work/research-ops-hub/"
+        "http://127.0.0.1:4321/work/test4test/"
       ],
       "settings": {
         "chromeFlags": "--headless=new --disable-gpu --no-sandbox --disable-dev-shm-usage --disable-crash-reporter --disable-features=Crashpad"
