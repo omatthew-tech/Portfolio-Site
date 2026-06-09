@@ -46,6 +46,10 @@ const photos = [
   description="About Matt, a product designer currently in Savannah, GA."
 >
   <section class="site-container about-page" aria-labelledby="about-title">
+    <div class="about-back prose-flow">
+      <a class="back-link" href="/">Back to home</a>
+    </div>
+
     <div class="photo-grid" aria-label="Photos from Matt's work and life">
       {
         photos.map((photo, index) => (
@@ -150,6 +154,8 @@ const photos = [
 
 <style>
   .about-page {
+    display: grid;
+    gap: var(--gap-content-block);
     padding-block: var(--gap-section);
   }
 
@@ -189,13 +195,19 @@ const photos = [
     width: 100%;
   }
 
+  .about-back,
   .about-intro {
-    margin-block-start: var(--gap-section);
     margin-inline: auto;
   }
 
   .about-intro h1 {
     margin: 0;
+  }
+
+  .back-link {
+    display: inline-flex;
+    min-height: 44px;
+    place-items: center;
   }
 
   .about-story {
