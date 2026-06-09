@@ -1,0 +1,54 @@
+<div class="camera-flash" aria-hidden="true"></div>
+
+<style>
+  .camera-flash {
+    animation: camera-flash 1800ms linear both;
+    background: var(--hero-ink, var(--color-primary));
+    inset: 0;
+    opacity: 1;
+    pointer-events: none;
+    position: fixed;
+    z-index: 9999;
+  }
+
+  @keyframes camera-flash {
+    0%,
+    34% {
+      background: var(--hero-ink, var(--color-primary));
+      opacity: 1;
+    }
+
+    38% {
+      background: var(--color-neutral);
+      opacity: 1;
+    }
+
+    44% {
+      background: var(--hero-ink, var(--color-primary));
+      opacity: 1;
+    }
+
+    50% {
+      background: var(--color-neutral);
+      opacity: 1;
+    }
+
+    60% {
+      background: var(--color-neutral);
+      opacity: 0.72;
+    }
+
+    100% {
+      background: var(--color-neutral);
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .camera-flash {
+      animation: none;
+      display: none;
+    }
+  }
+</style>
