@@ -49,9 +49,11 @@ import Figure from "@/components/Figure.astro";
     width: min(100%, calc(var(--spacing-1600) * 2.25));
   }
 
-  .hero-photo :global(.figure img) {
+  .hero-photo :global(.figure.figure-size-full img) {
     aspect-ratio: auto;
     border-radius: var(--radius-xl);
+    height: auto;
+    object-fit: contain;
     object-position: center;
   }
 

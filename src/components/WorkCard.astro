@@ -4,15 +4,27 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   entry: CollectionEntry<"work">;
+  loading?: "lazy" | "eager";
+  priority?: boolean;
+  sizes?: string;
 }
 
 const { entry } = Astro.props;
+const { loading = "lazy", priority = false, sizes } = Astro.props;
 const { title, summary, cover } = entry.data;
 ---
 
 <article class="work-card">
   <a class="cover-link" href={`/work/${entry.slug}/`} aria-label={`View case study: ${title}`}>
-    <Figure id={cover.id} alt={cover.alt} width={1600} height={1000} />
+    <Figure
+      id={cover.id}
+      alt={cover.alt}
+      width={1600}
+      height={1000}
+      loading={loading}
+      priority={priority}
+      sizes={sizes}
+    />
   </a>
   <div class="work-card-copy">
     <h3 class="h3"><a href={`/work/${entry.slug}/`}>{title}</a></h3>

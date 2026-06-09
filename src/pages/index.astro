@@ -22,7 +22,16 @@ const work = (await getCollection("work", ({ data }) => !data.draft))
       <h2 id="selected-work-title" class="h1">Case studies</h2>
     </div>
     <div class="work-grid">
-      {work.map((entry) => <WorkCard entry={entry} />)}
+      {
+        work.map((entry, index) => (
+          <WorkCard
+            entry={entry}
+            loading="eager"
+            priority={index === 0}
+            sizes="(min-width: 48rem) 31vw, calc(100vw - 2rem)"
+          />
+        ))
+      }
     </div>
   </section>
 </Base>

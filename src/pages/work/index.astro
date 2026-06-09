@@ -15,7 +15,16 @@ const work = (await getCollection("work", ({ data }) => !data.draft)).sort(
       <p class="body-lg">A set of UX and Product Design case studies focused on process, decisions and outcomes.</p>
     </div>
     <div class="work-grid">
-      {work.map((entry) => <WorkCard entry={entry} />)}
+      {
+        work.map((entry, index) => (
+          <WorkCard
+            entry={entry}
+            loading={index < 3 ? "eager" : "lazy"}
+            priority={index === 0}
+            sizes="(min-width: 48rem) 50vw, calc(100vw - 2rem)"
+          />
+        ))
+      }
     </div>
   </section>
 </Base>
