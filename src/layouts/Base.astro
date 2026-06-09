@@ -36,6 +36,18 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN;
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, site.url)} />
     <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>
+      (() => {
+        try {
+          if (sessionStorage.getItem("skipHomeFlash") === "true") {
+            sessionStorage.removeItem("skipHomeFlash");
+            document.documentElement.dataset.skipHomeFlash = "true";
+          }
+        } catch {
+          // Keep navigation working if storage is unavailable.
+        }
+      })();
+    </script>
     {analyticsToken && (
       <script
         is:inline
@@ -52,5 +64,24 @@ const analyticsToken = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN;
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        const link =
+          target instanceof Element
+            ? target.closest("[data-skip-home-flash]")
+            : null;
+
+        if (!link) {
+          return;
+        }
+
+        try {
+          sessionStorage.setItem("skipHomeFlash", "true");
+        } catch {
+          // Keep navigation working if storage is unavailable.
+        }
+      });
+    </script>
   </body>
 </html>

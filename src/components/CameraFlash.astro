@@ -11,6 +11,11 @@
     z-index: 9999;
   }
 
+  :global(html[data-skip-home-flash="true"]) .camera-flash {
+    animation: none;
+    display: none;
+  }
+
   @keyframes camera-flash {
     0%,
     34% {
