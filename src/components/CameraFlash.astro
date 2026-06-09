@@ -1,14 +1,43 @@
 <div class="camera-flash" aria-hidden="true"></div>
+<noscript><style>.camera-flash { display: none; }</style></noscript>
+<script is:inline>
+  (() => {
+    const root = document.documentElement;
+
+    if (root.dataset.skipHomeFlash === "true") {
+      return;
+    }
+
+    const startFlash = () => {
+      if (root.dataset.skipHomeFlash === "true") {
+        return;
+      }
+
+      requestAnimationFrame(() => {
+        root.dataset.homeFlashLoaded = "true";
+      });
+    };
+
+    if (document.readyState === "complete") {
+      startFlash();
+    } else {
+      window.addEventListener("load", startFlash, { once: true });
+    }
+  })();
+</script>
 
 <style>
   .camera-flash {
-    animation: camera-flash 1800ms linear both;
     background: var(--hero-ink, var(--color-primary));
     inset: 0;
     opacity: 1;
     pointer-events: none;
     position: fixed;
     z-index: 9999;
+  }
+
+  :global(html[data-home-flash-loaded="true"]) .camera-flash {
+    animation: camera-flash 1800ms linear both;
   }
 
   :global(html[data-skip-home-flash="true"]) .camera-flash {
