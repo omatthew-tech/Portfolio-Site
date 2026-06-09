@@ -3,6 +3,7 @@
 <script is:inline>
   (() => {
     const root = document.documentElement;
+    const flashDelay = 1000;
 
     if (root.dataset.skipHomeFlash === "true") {
       return;
@@ -13,9 +14,15 @@
         return;
       }
 
-      requestAnimationFrame(() => {
-        root.dataset.homeFlashLoaded = "true";
-      });
+      window.setTimeout(() => {
+        if (root.dataset.skipHomeFlash === "true") {
+          return;
+        }
+
+        requestAnimationFrame(() => {
+          root.dataset.homeFlashLoaded = "true";
+        });
+      }, flashDelay);
     };
 
     if (document.readyState === "complete") {
