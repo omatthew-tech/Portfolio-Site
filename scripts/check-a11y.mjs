@@ -28,10 +28,7 @@ const chromedriver = resolve(
 const urls =
   process.argv.slice(2).length > 0
     ? process.argv.slice(2)
-    : [
-        "http://127.0.0.1:4321/",
-        "http://127.0.0.1:4321/work/test4test/",
-      ];
+    : ["http://127.0.0.1:4321/", "http://127.0.0.1:4321/work/test4test/"];
 
 const chromeOptions = [
   "--headless=new",
