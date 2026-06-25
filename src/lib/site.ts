@@ -1,6 +1,6 @@
 export const site = {
   name: "Matt",
-  title: "Matt - UX Portfolio",
+  title: "Matt - Product Portfolio",
   description:
     "A type-led UX design portfolio focused on shipped product work, clear decisions, and measurable outcomes.",
   url: "https://matt-portfolio.pages.dev",
