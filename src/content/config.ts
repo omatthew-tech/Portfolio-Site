@@ -25,7 +25,6 @@ const work = defineCollection({
     tags: z.array(z.string()).default([]),
     cover: coverSchema,
     coverVideo: coverVideoSchema.optional(),
-    homePreviewVideo: coverVideoSchema.optional(),
     featured: z.boolean().default(false),
     order: z.number().default(100),
     draft: z.boolean().default(false),
