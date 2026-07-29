@@ -174,7 +174,10 @@ const {
   }
 
   .crossfade-phone-screen {
-    border-radius: calc(var(--radius-xl) + var(--spacing-100));
+    --phone-screen-radius: calc(var(--radius-xl) + var(--spacing-100));
+
+    border-radius: var(--phone-screen-radius);
+    clip-path: inset(0 round var(--phone-screen-radius));
     display: grid;
     overflow: hidden;
     position: relative;
@@ -197,8 +200,8 @@ const {
     width: 100%;
   }
 
-  .crossfade-panel :global(.figure.figure-screenshot img) {
-    border-radius: 0;
+  .crossfade-panel :global(.figure.figure-screenshot.figure-bare img) {
+    border-radius: var(--phone-screen-radius);
     display: block;
     height: auto;
     max-height: none;

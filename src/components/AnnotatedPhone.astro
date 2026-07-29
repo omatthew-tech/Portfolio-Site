@@ -388,7 +388,10 @@ const annotationStyle = (annotation: Annotation) => {
   }
 
   .phone-screen {
-    border-radius: calc(var(--radius-xl) + var(--spacing-100));
+    --phone-screen-radius: calc(var(--radius-xl) + var(--spacing-100));
+
+    border-radius: var(--phone-screen-radius);
+    clip-path: inset(0 round var(--phone-screen-radius));
     overflow: hidden;
     position: relative;
   }
@@ -397,8 +400,8 @@ const annotationStyle = (annotation: Annotation) => {
     width: 100%;
   }
 
-  .phone-screen :global(.figure.figure-screenshot img) {
-    border-radius: 0;
+  .phone-screen :global(.figure.figure-screenshot.figure-bare img) {
+    border-radius: var(--phone-screen-radius);
     display: block;
     height: auto;
     max-height: none;
