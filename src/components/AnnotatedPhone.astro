@@ -1,0 +1,319 @@
+---
+import Figure from "@/components/Figure.astro";
+
+interface Annotation {
+  text: string;
+  left: number;
+  top: number;
+  size: number;
+  lineY: number;
+}
+
+interface Props {
+  src: string;
+  alt: string;
+  annotations: [Annotation, Annotation];
+  copySide?: "left" | "right";
+  width?: number;
+  height?: number;
+}
+
+const {
+  src,
+  alt,
+  annotations,
+  copySide = "left",
+  width = 1320,
+  height = 2868,
+} = Astro.props;
+
+const annotationStyle = (annotation: Annotation) =>
+  [
+    `--target-left: ${annotation.left}%`,
+    `--target-top: ${annotation.top}%`,
+    `--target-size: ${annotation.size}%`,
+    `--line-y: ${annotation.lineY}%`,
+  ].join("; ");
+---
+
+<section
+  class:list={[
+    "figure",
+    "annotated-phone",
+    copySide === "right" && "annotated-phone-copy-right",
+  ]}
+  aria-label="Annotated LittlePickle interface"
+>
+  <ol class="annotation-copy" aria-label="Interface design decisions">
+    {
+      annotations.map((annotation) => (
+        <li
+          class="annotation-copy-item"
+          style={`--line-y: ${annotation.lineY}%`}
+        >
+          <p>{annotation.text}</p>
+        </li>
+      ))
+    }
+  </ol>
+
+  <div class="phone-frame">
+    <span class="phone-button phone-button-action" aria-hidden="true"></span>
+    <span class="phone-button phone-button-volume-up" aria-hidden="true"></span>
+    <span class="phone-button phone-button-volume-down" aria-hidden="true"></span>
+    <span class="phone-button phone-button-power" aria-hidden="true"></span>
+
+    <div class="phone-screen">
+      <Figure
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        variant="screenshot"
+        card={false}
+        sizes="(min-width: 64rem) 24rem, min(24rem, calc(100vw - 4rem))"
+      />
+
+      {
+        annotations.map((annotation) => (
+          <>
+            <span
+              class="annotation-target"
+              style={annotationStyle(annotation)}
+              aria-hidden="true"
+            />
+            <span
+              class="annotation-line"
+              style={annotationStyle(annotation)}
+              aria-hidden="true"
+            />
+          </>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .annotated-phone {
+    align-items: stretch;
+    display: grid;
+    gap: var(--gap-section);
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, calc(var(--spacing-1600) * 3));
+    margin: 0;
+    position: relative;
+    width: 100%;
+  }
+
+  .annotated-phone-copy-right {
+    grid-template-columns:
+      minmax(0, calc(var(--spacing-1600) * 3))
+      minmax(0, 1fr);
+  }
+
+  .annotation-copy {
+    grid-column: 1;
+    grid-row: 1;
+    list-style: none;
+    margin: 0;
+    min-height: 100%;
+    padding: 0;
+    position: relative;
+  }
+
+  .annotated-phone-copy-right .annotation-copy {
+    grid-column: 2;
+  }
+
+  .annotation-copy-item {
+    inset-block-start: var(--line-y);
+    inset-inline: 0;
+    margin: 0;
+    padding-inline-end: var(--spacing-300);
+    position: absolute;
+    transform: translateY(-50%);
+  }
+
+  .annotated-phone-copy-right .annotation-copy-item {
+    padding-inline: var(--spacing-300) 0;
+  }
+
+  .annotation-copy-item p {
+    margin: 0;
+    max-width: var(--measure-prose);
+  }
+
+  .annotation-copy-item::after,
+  .annotated-phone-copy-right .annotation-copy-item::before {
+    border-block-start: var(--spacing-025) solid var(--color-accent);
+    content: "";
+    inset-block-start: 50%;
+    position: absolute;
+    width: var(--gap-section);
+  }
+
+  .annotation-copy-item::after {
+    inset-inline-start: 100%;
+  }
+
+  .annotated-phone-copy-right .annotation-copy-item::after {
+    content: none;
+  }
+
+  .annotated-phone-copy-right .annotation-copy-item::before {
+    inset-inline-end: 100%;
+  }
+
+  .phone-frame {
+    align-self: start;
+    background: var(--color-primary);
+    border: var(--spacing-025) solid var(--color-muted);
+    border-radius: calc(var(--radius-xl) + var(--spacing-250));
+    box-shadow: var(--shadow-elev-2);
+    box-sizing: border-box;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+    max-width: 100%;
+    padding: var(--spacing-075);
+    position: relative;
+    width: calc(var(--spacing-1600) * 3);
+  }
+
+  .annotated-phone-copy-right .phone-frame {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .phone-screen {
+    border-radius: calc(var(--radius-xl) + var(--spacing-100));
+    overflow: hidden;
+    position: relative;
+  }
+
+  .phone-screen :global(.figure) {
+    width: 100%;
+  }
+
+  .phone-screen :global(.figure img) {
+    border-radius: 0;
+    display: block;
+    height: auto;
+    max-height: none;
+    width: 100%;
+  }
+
+  .phone-button {
+    background: var(--color-muted);
+    border-radius: var(--radius-pill);
+    position: absolute;
+    width: var(--spacing-050);
+  }
+
+  .phone-button-action,
+  .phone-button-volume-up,
+  .phone-button-volume-down {
+    inset-inline-start: calc(var(--spacing-050) * -1);
+  }
+
+  .phone-button-action {
+    height: var(--spacing-150);
+    inset-block-start: 17%;
+  }
+
+  .phone-button-volume-up {
+    height: var(--spacing-300);
+    inset-block-start: 24%;
+  }
+
+  .phone-button-volume-down {
+    height: var(--spacing-300);
+    inset-block-start: 31%;
+  }
+
+  .phone-button-power {
+    height: var(--spacing-400);
+    inset-block-start: 27%;
+    inset-inline-end: calc(var(--spacing-050) * -1);
+  }
+
+  .annotation-target {
+    aspect-ratio: 1;
+    border: var(--spacing-025) solid var(--color-accent);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 0 0 var(--spacing-050)
+      color-mix(in srgb, var(--color-accent) 20%, transparent);
+    inset-block-start: var(--target-top);
+    inset-inline-start: var(--target-left);
+    position: absolute;
+    width: var(--target-size);
+    z-index: 2;
+  }
+
+  .annotation-line {
+    background: var(--color-accent);
+    height: var(--spacing-025);
+    inset-block-start: var(--line-y);
+    inset-inline-start: 0;
+    position: absolute;
+    width: var(--target-left);
+    z-index: 1;
+  }
+
+  .annotated-phone-copy-right .annotation-line {
+    inset-inline-end: 0;
+    inset-inline-start: calc(var(--target-left) + var(--target-size));
+    width: auto;
+  }
+
+  .annotated-phone + .annotated-phone {
+    margin-block-start: var(--gap-section);
+  }
+
+  @media (max-width: 47.99rem) {
+    .annotated-phone,
+    .annotated-phone-copy-right {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phone-frame,
+    .annotated-phone-copy-right .phone-frame {
+      align-self: center;
+      max-width: calc(100% - var(--spacing-200));
+      order: 1;
+      width: calc(var(--spacing-1600) * 2.5);
+    }
+
+    .annotation-copy,
+    .annotated-phone-copy-right .annotation-copy {
+      display: grid;
+      gap: var(--spacing-300);
+      min-height: 0;
+      order: 2;
+    }
+
+    .annotation-copy-item,
+    .annotated-phone-copy-right .annotation-copy-item {
+      inset: auto;
+      padding-inline: var(--spacing-300) 0;
+      position: relative;
+      transform: none;
+    }
+
+    .annotation-copy-item::after,
+    .annotated-phone-copy-right .annotation-copy-item::after {
+      border-block-start: var(--spacing-025) solid var(--color-accent);
+      content: "";
+      inset-block-start: 0.7em;
+      inset-inline: 0 auto;
+      width: var(--spacing-200);
+    }
+
+    .annotated-phone-copy-right .annotation-copy-item::before {
+      content: none;
+    }
+  }
+</style>

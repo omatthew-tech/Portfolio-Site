@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import AnnotatedPhone from "@/components/AnnotatedPhone.astro";
 import Callout from "@/components/Callout.astro";
 import CaseText from "@/components/CaseText.astro";
 import CaseTextPair from "@/components/CaseTextPair.astro";
@@ -28,6 +29,7 @@ const { Content } = await entry.render();
 <Case entry={entry}>
   <Content
     components={{
+      AnnotatedPhone,
       Figure,
       FigureGroup,
       Callout,

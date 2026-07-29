@@ -22,26 +22,41 @@ const {
   loop = true,
   preload = "metadata",
 } = Astro.props;
+
+const isPortrait = height > width;
 ---
 
-<figure class="case-video">
-  <video
-    data-case-video
-    data-src={src}
-    data-type={type}
-    class="case-video-media"
-    autoplay={autoplay}
-    muted={autoplay}
-    loop={loop}
-    playsinline
-    preload={preload}
-    poster={poster}
-    width={width}
-    height={height}
-    aria-label={label || undefined}
-    aria-hidden={label ? undefined : "true"}
-  >
-  </video>
+<figure class:list={["case-video", isPortrait && "case-video-portrait"]}>
+  <div class:list={["case-video-frame", isPortrait && "iphone-frame"]}>
+    {
+      isPortrait && (
+        <>
+          <span class="iphone-button iphone-button-action" aria-hidden="true" />
+          <span class="iphone-button iphone-button-volume-up" aria-hidden="true" />
+          <span class="iphone-button iphone-button-volume-down" aria-hidden="true" />
+          <span class="iphone-button iphone-button-power" aria-hidden="true" />
+        </>
+      )
+    }
+    <video
+      data-case-video
+      data-src={src}
+      data-type={type}
+      class:list={["case-video-media", isPortrait && "case-video-media-portrait"]}
+      style={`--case-video-aspect: ${width} / ${height}`}
+      autoplay={autoplay}
+      muted={autoplay}
+      loop={loop}
+      playsinline
+      preload={preload}
+      poster={poster}
+      width={width}
+      height={height}
+      aria-label={label || undefined}
+      aria-hidden={label ? undefined : "true"}
+    >
+    </video>
+  </div>
 </figure>
 
 <script>
@@ -117,13 +132,81 @@ const {
     padding: var(--spacing-100);
   }
 
+  .case-video-frame {
+    width: 100%;
+  }
+
   .case-video-media {
-    aspect-ratio: 16 / 9;
+    aspect-ratio: var(--case-video-aspect, 16 / 9);
     background: var(--color-surface);
     border-radius: var(--radius-md);
     display: block;
     height: auto;
     object-fit: cover;
     width: 100%;
+  }
+
+  .case-video-portrait {
+    display: grid;
+    place-items: center;
+  }
+
+  .iphone-frame {
+    background: var(--color-primary);
+    border: var(--spacing-025) solid var(--color-muted);
+    border-radius: calc(var(--radius-xl) + var(--spacing-250));
+    box-shadow: var(--shadow-elev-2);
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: var(--spacing-075);
+    position: relative;
+    width: fit-content;
+  }
+
+  .iphone-frame .case-video-media {
+    border-radius: calc(var(--radius-xl) + var(--spacing-100));
+    position: relative;
+    z-index: 1;
+  }
+
+  .case-video-media-portrait {
+    margin-inline: auto;
+    max-height: min(80vh, calc(var(--spacing-1600) * 7));
+    max-width: 100%;
+    width: auto;
+  }
+
+  .iphone-button {
+    background: var(--color-muted);
+    border-radius: var(--radius-pill);
+    position: absolute;
+    width: var(--spacing-050);
+  }
+
+  .iphone-button-action,
+  .iphone-button-volume-up,
+  .iphone-button-volume-down {
+    inset-inline-start: calc(var(--spacing-050) * -1);
+  }
+
+  .iphone-button-action {
+    height: var(--spacing-150);
+    inset-block-start: 17%;
+  }
+
+  .iphone-button-volume-up {
+    height: var(--spacing-300);
+    inset-block-start: 24%;
+  }
+
+  .iphone-button-volume-down {
+    height: var(--spacing-300);
+    inset-block-start: 31%;
+  }
+
+  .iphone-button-power {
+    height: var(--spacing-400);
+    inset-block-start: 27%;
+    inset-inline-end: calc(var(--spacing-050) * -1);
   }
 </style>

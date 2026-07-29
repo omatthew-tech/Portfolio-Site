@@ -79,6 +79,8 @@ const placeholderMap: Record<string, string> = {
   "mattyophotos-08": "/images/cases/MattyOphotos/cropped/mattyophotos-08.jpg",
   "mattyophotos-09": "/images/cases/MattyOphotos/cropped/mattyophotos-09.jpg",
   "mattyophotos-10": "/images/cases/MattyOphotos/cropped/mattyophotos-10.jpg",
+  "littlepickle-cover":
+    "/images/cases/LittlePickle/littlepickle-cover.jpg",
 };
 
 export function cfImage(id: string, options: CfImageOptions = {}) {
