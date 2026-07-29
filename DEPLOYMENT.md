@@ -14,3 +14,8 @@ generated `dist` directory directly.
 Do not use `npx wrangler deploy` for this static Pages project. Without a
 committed Wrangler config, Wrangler will auto-detect the framework in CI and may
 try to convert the site into a Worker/Pages Functions deployment.
+
+Cloudflare Pages only accepts individual assets up to 25 MiB. Keep original,
+source-quality recordings in `source-assets/` and place only web-ready encodes
+in `public/`, since Astro copies everything in `public/` into the deployed
+`dist/` directory.
