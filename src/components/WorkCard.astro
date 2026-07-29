@@ -11,26 +11,124 @@ interface Props {
 
 const { entry } = Astro.props;
 const { loading = "lazy", priority = false, sizes } = Astro.props;
-const { title, summary, cover } = entry.data;
+const { title, summary, cover, homePreviewVideo } = entry.data;
+const useVideoPreview = entry.slug === "littlepickle" && Boolean(homePreviewVideo);
 ---
 
 <article class="work-card">
   <a class="cover-link" href={`/work/${entry.slug}/`} aria-label={`View case study: ${title}`}>
-    <Figure
-      id={cover.id}
-      alt={cover.alt}
-      width={1600}
-      height={1000}
-      loading={loading}
-      priority={priority}
-      sizes={sizes}
-    />
+    {
+      useVideoPreview && homePreviewVideo ? (
+        <div class="work-card-video-preview">
+          <div class="work-card-phone">
+            <span class="phone-button phone-button-action" aria-hidden="true" />
+            <span
+              class="phone-button phone-button-volume-up"
+              aria-hidden="true"
+            />
+            <span
+              class="phone-button phone-button-volume-down"
+              aria-hidden="true"
+            />
+            <span class="phone-button phone-button-power" aria-hidden="true" />
+
+            <video
+              class="work-card-video"
+              data-work-card-video
+              data-src={homePreviewVideo.src}
+              data-type={homePreviewVideo.type}
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="none"
+              poster={homePreviewVideo.poster}
+              width={homePreviewVideo.width}
+              height={homePreviewVideo.height}
+              aria-hidden="true"
+              tabindex="-1"
+            />
+          </div>
+        </div>
+      ) : (
+        <Figure
+          id={cover.id}
+          alt={cover.alt}
+          width={1600}
+          height={1000}
+          loading={loading}
+          priority={priority}
+          sizes={sizes}
+        />
+      )
+    }
   </a>
   <div class="work-card-copy">
     <h3 class="h3"><a href={`/work/${entry.slug}/`}>{title}</a></h3>
     <p>{summary}</p>
   </div>
 </article>
+
+<script>
+  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const videos = document.querySelectorAll<HTMLVideoElement>(
+    "[data-work-card-video]",
+  );
+
+  const loadAndPlay = (video: HTMLVideoElement) => {
+    if (motionQuery.matches) {
+      video.pause();
+      return;
+    }
+
+    if (video.dataset.loaded !== "true" && video.dataset.src) {
+      const source = document.createElement("source");
+      source.src = video.dataset.src;
+      source.type = video.dataset.type ?? "video/mp4";
+      video.append(source);
+      video.dataset.loaded = "true";
+      video.load();
+    }
+
+    video.play().catch(() => {});
+  };
+
+  const observer =
+    "IntersectionObserver" in window
+      ? new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!(entry.target instanceof HTMLVideoElement)) return;
+
+              if (entry.isIntersecting) {
+                loadAndPlay(entry.target);
+              } else {
+                entry.target.pause();
+              }
+            });
+          },
+          { rootMargin: "200px" },
+        )
+      : undefined;
+
+  videos.forEach((video) => {
+    if (observer) {
+      observer.observe(video);
+    } else {
+      loadAndPlay(video);
+    }
+  });
+
+  motionQuery.addEventListener("change", () => {
+    videos.forEach((video) => {
+      if (motionQuery.matches) {
+        video.pause();
+      } else {
+        loadAndPlay(video);
+      }
+    });
+  });
+</script>
 
 <style>
   .work-card {
@@ -51,7 +149,75 @@ const { title, summary, cover } = entry.data;
 
   .cover-link {
     color: inherit;
+    display: block;
     text-decoration: none;
+  }
+
+  .work-card-video-preview {
+    aspect-ratio: 16 / 10;
+    background: var(--color-neutral);
+    border-radius: var(--radius-lg);
+    display: grid;
+    overflow: hidden;
+    place-items: center;
+    width: 100%;
+  }
+
+  .work-card-phone {
+    aspect-ratio: 660 / 1434;
+    background: var(--color-primary);
+    border: var(--spacing-025) solid var(--color-muted);
+    border-radius: calc(var(--radius-xl) + var(--spacing-100));
+    box-shadow: var(--shadow-elev-1);
+    box-sizing: border-box;
+    height: 100%;
+    padding: var(--spacing-025);
+    position: relative;
+  }
+
+  .work-card-video {
+    border-radius: calc(var(--radius-xl) + var(--spacing-050));
+    display: block;
+    height: calc(100% - var(--spacing-050));
+    inset: var(--spacing-025);
+    object-fit: cover;
+    pointer-events: none;
+    position: absolute;
+    width: calc(100% - var(--spacing-050));
+  }
+
+  .phone-button {
+    background: var(--color-muted);
+    border-radius: var(--radius-pill);
+    position: absolute;
+    width: var(--spacing-025);
+  }
+
+  .phone-button-action,
+  .phone-button-volume-up,
+  .phone-button-volume-down {
+    inset-inline-start: calc(var(--spacing-025) * -1);
+  }
+
+  .phone-button-action {
+    height: var(--spacing-075);
+    inset-block-start: 17%;
+  }
+
+  .phone-button-volume-up {
+    height: var(--spacing-150);
+    inset-block-start: 24%;
+  }
+
+  .phone-button-volume-down {
+    height: var(--spacing-150);
+    inset-block-start: 31%;
+  }
+
+  .phone-button-power {
+    height: var(--spacing-200);
+    inset-block-start: 27%;
+    inset-inline-end: calc(var(--spacing-025) * -1);
   }
 
   .work-card-copy {
@@ -78,6 +244,10 @@ const { title, summary, cover } = entry.data;
     .work-card:hover {
       box-shadow: none;
       transform: none;
+    }
+
+    .work-card-video {
+      transition: none;
     }
   }
 </style>
