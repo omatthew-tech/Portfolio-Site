@@ -20,6 +20,7 @@ interface Props {
   copySide?: "left" | "right";
   width?: number;
   height?: number;
+  showMarks?: boolean;
 }
 
 const {
@@ -29,6 +30,7 @@ const {
   copySide = "left",
   width = 1320,
   height = 2868,
+  showMarks = true,
 } = Astro.props;
 
 const annotationSide = (annotation: Annotation) =>
@@ -51,6 +53,8 @@ const annotationStyle = (annotation: Annotation) => {
   const targetHeight =
     annotation.height ?? targetWidth * (width / height);
   const copyY = annotation.copyY ?? annotation.lineY;
+  const connectorRise =
+    3 * (height / width) * (Math.abs(copyY - annotation.lineY) / 100);
 
   return [
     `--target-left: ${annotation.left}%`,
@@ -60,8 +64,7 @@ const annotationStyle = (annotation: Annotation) => {
     `--target-right: ${100 - annotation.left - targetWidth}%`,
     `--line-y: ${annotation.lineY}%`,
     `--copy-y: ${copyY}%`,
-    `--elbow-top: ${Math.min(copyY, annotation.lineY)}%`,
-    `--elbow-height: ${Math.abs(copyY - annotation.lineY)}%`,
+    `--connector-rise: calc(var(--spacing-1600) * ${connectorRise.toFixed(4)})`,
   ].join("; ");
 };
 ---
@@ -69,9 +72,11 @@ const annotationStyle = (annotation: Annotation) => {
 <section
   class:list={[
     "figure",
+    "case-screenshot-section",
     "annotated-phone",
     !isSplit && copySide === "right" && "annotated-phone-copy-right",
     isSplit && "annotated-phone-split",
+    !showMarks && "annotated-phone-no-marks",
   ]}
   aria-label="Annotated LittlePickle interface"
 >
@@ -84,9 +89,41 @@ const annotationStyle = (annotation: Annotation) => {
         {leftAnnotations.map(({ annotation, index }) => (
           <li
             class="annotation-copy-item"
-            style={`--copy-y: ${annotation.copyY ?? annotation.lineY}%; --mobile-order: ${index + 2}`}
+            style={`${annotationStyle(annotation)}; --mobile-order: ${index + 2}`}
           >
             <p>{annotation.text}</p>
+            {showMarks && isSplit && (
+              <span
+                class:list={[
+                  "annotation-diagonal",
+                  "annotation-diagonal-left",
+                  annotation.lineY >=
+                    (annotation.copyY ?? annotation.lineY)
+                    ? "annotation-diagonal-target-below"
+                    : "annotation-diagonal-target-above",
+                ]}
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <line
+                    x1="0"
+                    y1={
+                      annotation.lineY >=
+                      (annotation.copyY ?? annotation.lineY)
+                        ? "0"
+                        : "100"
+                    }
+                    x2="100"
+                    y2={
+                      annotation.lineY >=
+                      (annotation.copyY ?? annotation.lineY)
+                        ? "100"
+                        : "0"
+                    }
+                  />
+                </svg>
+              </span>
+            )}
           </li>
         ))}
       </ol>
@@ -102,9 +139,41 @@ const annotationStyle = (annotation: Annotation) => {
         {rightAnnotations.map(({ annotation, index }) => (
           <li
             class="annotation-copy-item"
-            style={`--copy-y: ${annotation.copyY ?? annotation.lineY}%; --mobile-order: ${index + 2}`}
+            style={`${annotationStyle(annotation)}; --mobile-order: ${index + 2}`}
           >
             <p>{annotation.text}</p>
+            {showMarks && isSplit && (
+              <span
+                class:list={[
+                  "annotation-diagonal",
+                  "annotation-diagonal-right",
+                  annotation.lineY >=
+                    (annotation.copyY ?? annotation.lineY)
+                    ? "annotation-diagonal-target-below"
+                    : "annotation-diagonal-target-above",
+                ]}
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <line
+                    x1="0"
+                    y1={
+                      annotation.lineY >=
+                      (annotation.copyY ?? annotation.lineY)
+                        ? "100"
+                        : "0"
+                    }
+                    x2="100"
+                    y2={
+                      annotation.lineY >=
+                      (annotation.copyY ?? annotation.lineY)
+                        ? "0"
+                        : "100"
+                    }
+                  />
+                </svg>
+              </span>
+            )}
           </li>
         ))}
       </ol>
@@ -129,6 +198,7 @@ const annotationStyle = (annotation: Annotation) => {
       />
 
       {
+        showMarks &&
         annotations.map((annotation) => (
           <span
             class="annotation-target"
@@ -140,6 +210,7 @@ const annotationStyle = (annotation: Annotation) => {
     </div>
 
     {
+      showMarks &&
       annotations.map((annotation) => (
         <>
           <span
@@ -147,15 +218,6 @@ const annotationStyle = (annotation: Annotation) => {
               "annotation-line",
               annotationSide(annotation) === "right" &&
                 "annotation-line-right",
-            ]}
-            style={annotationStyle(annotation)}
-            aria-hidden="true"
-          />
-          <span
-            class:list={[
-              "annotation-elbow",
-              annotationSide(annotation) === "right" &&
-                "annotation-elbow-right",
             ]}
             style={annotationStyle(annotation)}
             aria-hidden="true"
@@ -251,6 +313,52 @@ const annotationStyle = (annotation: Annotation) => {
 
   .annotation-copy-right .annotation-copy-item::before {
     inset-inline-end: 100%;
+  }
+
+  .annotated-phone.annotated-phone-no-marks
+    .annotation-copy-left
+    .annotation-copy-item::after,
+  .annotated-phone.annotated-phone-no-marks
+    .annotation-copy-right
+    .annotation-copy-item::before {
+    content: none;
+  }
+
+  .annotation-diagonal {
+    height: max(var(--connector-rise), var(--spacing-025));
+    pointer-events: none;
+    position: absolute;
+    width: calc(var(--gap-section) + var(--spacing-100));
+    z-index: 3;
+  }
+
+  .annotation-diagonal-left {
+    inset-inline-start: 100%;
+  }
+
+  .annotation-diagonal-right {
+    inset-inline-end: 100%;
+  }
+
+  .annotation-diagonal-target-below {
+    inset-block-start: 50%;
+  }
+
+  .annotation-diagonal-target-above {
+    inset-block-end: 50%;
+  }
+
+  .annotation-diagonal svg {
+    display: block;
+    height: 100%;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .annotation-diagonal line {
+    stroke: var(--color-accent);
+    stroke-width: var(--spacing-025);
+    vector-effect: non-scaling-stroke;
   }
 
   .phone-frame {
@@ -360,23 +468,15 @@ const annotationStyle = (annotation: Annotation) => {
     width: calc(var(--target-right) + var(--spacing-100));
   }
 
-  .annotation-elbow {
-    background: var(--color-accent);
-    height: var(--elbow-height);
-    inset-block-start: var(--elbow-top);
-    inset-inline-start: calc(var(--spacing-025) * -1);
-    position: absolute;
-    width: var(--spacing-025);
-    z-index: 1;
-  }
-
-  .annotation-elbow-right {
-    inset-inline-end: calc(var(--spacing-025) * -1);
-    inset-inline-start: auto;
-  }
-
-  .annotated-phone + .annotated-phone {
-    margin-block-start: var(--gap-section);
+  @media (min-width: 64rem) {
+    .annotated-phone-split
+      .annotation-copy-left
+      .annotation-copy-item::after,
+    .annotated-phone-split
+      .annotation-copy-right
+      .annotation-copy-item::before {
+      content: none;
+    }
   }
 
   @media (max-width: 63.99rem) {
@@ -425,6 +525,19 @@ const annotationStyle = (annotation: Annotation) => {
 
     .annotation-copy-right .annotation-copy-item::before {
       content: none;
+    }
+
+    .annotated-phone.annotated-phone-no-marks
+      .annotation-copy-left
+      .annotation-copy-item::after,
+    .annotated-phone.annotated-phone-no-marks
+      .annotation-copy-right
+      .annotation-copy-item::after {
+      content: none;
+    }
+
+    .annotation-diagonal {
+      display: none;
     }
   }
 </style>

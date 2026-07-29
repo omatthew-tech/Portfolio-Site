@@ -1,7 +1,7 @@
 ---
 title: "LittlePickle"
 summary: 'Designing a local pickleball court app to solve the "who plays next" problem'
-role: "Product designer"
+role: "Founder, Product Designer"
 company: "LittlePickle"
 year: 2026
 tags: ["Product design", "Mobile UX", "UI design"]
@@ -25,12 +25,13 @@ nda: false
 
 Deciding "who plays next" can be a challenge. Even if you've tried the "paddle system", that still doesn't account for a player's skill level and can lead to unbalanced match making. LittlePickle attempts to solve this through an advanced queue system, balanced match making and a little competitiveness to keep things fun
 
-## The Process
+## The Thought Process
 
 <AnnotatedPhone
   src="/images/cases/LittlePickle/screenshots/01-home-no-active-players.png"
   alt="LittlePickle home screen with options to scan a league QR code or search for a league, plus local league activity counts."
   copySide="left"
+  showMarks={false}
   annotations={[
     {
       text: "Scanning a QR code is the simplest and quickest way for anyone to join the queue. However, if the QR code is damaged, then searching for your local league is just as effective.",
@@ -55,6 +56,7 @@ Deciding "who plays next" can be a challenge. Even if you've tried the "paddle s
   src="/images/cases/LittlePickle/screenshots/04-league-one-player.png"
   alt="LittlePickle league screen showing the current player's queue position, rank, wait time and controls for adding other players."
   copySide="right"
+  showMarks={false}
   annotations={[
     {
       text: "The player card shows when you're up next, a ranking and an estimated wait time. This feature encourages more users to download and use the app, even if someone else is keeping track of the matches.",
@@ -77,6 +79,7 @@ Deciding "who plays next" can be a challenge. Even if you've tried the "paddle s
 <AnnotatedPhone
   src="/images/cases/LittlePickle/screenshots/08-recommended-matches-initial.png"
   alt="LittlePickle recommended matches screen with controls for creating a custom match, viewing match history, choosing the best match and passing a turn."
+  showMarks={false}
   annotations={[
     {
       text: "Custom match gives players the choice to come up with their own matches, while still incentivising to report the score and use the app.",
@@ -120,3 +123,17 @@ Deciding "who plays next" can be a challenge. Even if you've tried the "paddle s
     },
   ]}
 />
+
+<CrossfadePhone
+  firstSrc="/images/cases/LittlePickle/screenshots/13-match-result-team-one-selected.png"
+  firstAlt="LittlePickle match result screen where players report only the winning team in noncompetitive mode."
+  secondSrc="/images/cases/LittlePickle/screenshots/16-profile.png"
+  secondAlt="LittlePickle profile showing the player's private rank and players near their level."
+  interval={6000}
+>
+  Lastly, admins can turn on "competitive" mode. This mode is turned off by default, which means players only need to report who won, rather than the actual score. This is meant to be inclusive, especially for players who prefer fun over competition. Also, players can only view their own rank and other players near their level.
+</CrossfadePhone>
+
+## The Results
+
+Coming soon! LittlePickle just launched on iOS. Download it now: [https://testflight.apple.com/join/7vy66xAg](https://testflight.apple.com/join/7vy66xAg)

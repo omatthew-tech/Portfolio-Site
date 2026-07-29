@@ -76,6 +76,15 @@ const { entry } = Astro.props;
     margin-block-start: var(--case-copy-gap);
   }
 
+  :global(
+    .case-body
+      .prose-flow
+      > .case-screenshot-section
+      + .case-screenshot-section
+  ) {
+    margin-block-start: var(--case-section-gap);
+  }
+
   :global(.case-body .prose-flow > p + p),
   :global(.case-body .prose-flow > ul + p),
   :global(.case-body .prose-flow > ol + p),

@@ -1,0 +1,275 @@
+---
+import Figure from "@/components/Figure.astro";
+
+interface Props {
+  firstSrc: string;
+  firstAlt: string;
+  secondSrc: string;
+  secondAlt: string;
+  width?: number;
+  height?: number;
+  interval?: number;
+}
+
+const {
+  firstSrc,
+  firstAlt,
+  secondSrc,
+  secondAlt,
+  width = 1320,
+  height = 2868,
+  interval = 6000,
+} = Astro.props;
+---
+
+<section
+  class="figure case-screenshot-section crossfade-phone"
+  data-crossfade-phone
+  data-interval={interval}
+  aria-label="Alternating LittlePickle interface screenshots"
+>
+  <div class="crossfade-phone-frame">
+    <span class="phone-button phone-button-action" aria-hidden="true"></span>
+    <span class="phone-button phone-button-volume-up" aria-hidden="true"></span>
+    <span class="phone-button phone-button-volume-down" aria-hidden="true"></span>
+    <span class="phone-button phone-button-power" aria-hidden="true"></span>
+
+    <div class="crossfade-phone-screen">
+      <div
+        class="crossfade-panel is-active"
+        data-crossfade-panel
+        aria-hidden="false"
+      >
+        <Figure
+          src={firstSrc}
+          alt={firstAlt}
+          width={width}
+          height={height}
+          variant="screenshot"
+          card={false}
+          sizes="(min-width: 64rem) 24rem, min(24rem, calc(100vw - 4rem))"
+        />
+      </div>
+
+      <div class="crossfade-panel" data-crossfade-panel aria-hidden="true">
+        <Figure
+          src={secondSrc}
+          alt={secondAlt}
+          width={width}
+          height={height}
+          variant="screenshot"
+          card={false}
+          sizes="(min-width: 64rem) 24rem, min(24rem, calc(100vw - 4rem))"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="crossfade-copy">
+    <p><slot /></p>
+  </div>
+</section>
+
+<script>
+  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const players = document.querySelectorAll<HTMLElement>(
+    "[data-crossfade-phone]:not([data-crossfade-ready])",
+  );
+
+  players.forEach((player) => {
+    player.dataset.crossfadeReady = "true";
+
+    const panels = Array.from(
+      player.querySelectorAll<HTMLElement>("[data-crossfade-panel]"),
+    );
+    const interval = Number(player.dataset.interval) || 6000;
+    let activeIndex = 0;
+    let timer: number | undefined;
+    let isVisible = false;
+
+    const showPanel = (index: number) => {
+      activeIndex = index;
+      panels.forEach((panel, panelIndex) => {
+        const isActive = panelIndex === activeIndex;
+        panel.classList.toggle("is-active", isActive);
+        panel.setAttribute("aria-hidden", String(!isActive));
+      });
+    };
+
+    const stop = () => {
+      if (timer === undefined) return;
+      window.clearInterval(timer);
+      timer = undefined;
+    };
+
+    const start = () => {
+      stop();
+      if (motionQuery.matches || panels.length < 2) {
+        showPanel(0);
+        return;
+      }
+
+      timer = window.setInterval(() => {
+        showPanel((activeIndex + 1) % panels.length);
+      }, interval);
+    };
+
+    const syncMotionPreference = () => {
+      if (motionQuery.matches) {
+        stop();
+        showPanel(0);
+        return;
+      }
+
+      if (isVisible) start();
+    };
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          isVisible = entry?.isIntersecting ?? false;
+          if (isVisible) {
+            start();
+          } else {
+            stop();
+          }
+        },
+        { threshold: 0.15 },
+      );
+
+      observer.observe(player);
+    } else {
+      isVisible = true;
+      start();
+    }
+
+    motionQuery.addEventListener("change", syncMotionPreference);
+  });
+</script>
+
+<style>
+  .crossfade-phone {
+    align-items: center;
+    display: grid;
+    gap: var(--gap-section);
+    grid-template-columns:
+      minmax(0, calc(var(--spacing-1600) * 3))
+      minmax(0, 1fr);
+    margin: 0;
+    width: 100%;
+  }
+
+  .crossfade-phone-frame {
+    background: var(--color-primary);
+    border: var(--spacing-025) solid var(--color-muted);
+    border-radius: calc(var(--radius-xl) + var(--spacing-250));
+    box-shadow: var(--shadow-elev-2);
+    box-sizing: border-box;
+    grid-column: 1;
+    justify-self: start;
+    max-width: 100%;
+    padding: var(--spacing-075);
+    position: relative;
+    width: calc(var(--spacing-1600) * 3);
+  }
+
+  .crossfade-phone-screen {
+    border-radius: calc(var(--radius-xl) + var(--spacing-100));
+    display: grid;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .crossfade-panel {
+    grid-area: 1 / 1;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 600ms ease-in-out;
+  }
+
+  .crossfade-panel.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+  }
+
+  .crossfade-panel :global(.figure) {
+    width: 100%;
+  }
+
+  .crossfade-panel :global(.figure img) {
+    border-radius: 0;
+    display: block;
+    height: auto;
+    max-height: none;
+    width: 100%;
+  }
+
+  .crossfade-copy {
+    grid-column: 2;
+    max-width: var(--measure-prose);
+  }
+
+  .crossfade-copy p {
+    margin: 0;
+  }
+
+  .phone-button {
+    background: var(--color-muted);
+    border-radius: var(--radius-pill);
+    position: absolute;
+    width: var(--spacing-050);
+  }
+
+  .phone-button-action,
+  .phone-button-volume-up,
+  .phone-button-volume-down {
+    inset-inline-start: calc(var(--spacing-050) * -1);
+  }
+
+  .phone-button-action {
+    height: var(--spacing-150);
+    inset-block-start: 17%;
+  }
+
+  .phone-button-volume-up {
+    height: var(--spacing-300);
+    inset-block-start: 24%;
+  }
+
+  .phone-button-volume-down {
+    height: var(--spacing-300);
+    inset-block-start: 31%;
+  }
+
+  .phone-button-power {
+    height: var(--spacing-400);
+    inset-block-start: 27%;
+    inset-inline-end: calc(var(--spacing-050) * -1);
+  }
+
+  @media (max-width: 63.99rem) {
+    .crossfade-phone {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-300);
+    }
+
+    .crossfade-phone-frame {
+      align-self: center;
+      max-width: calc(100% - var(--spacing-200));
+      width: calc(var(--spacing-1600) * 2.5);
+    }
+
+    .crossfade-copy {
+      max-width: none;
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .crossfade-panel {
+      transition: none;
+    }
+  }
+</style>
