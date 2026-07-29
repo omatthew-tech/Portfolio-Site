@@ -34,17 +34,19 @@ Deciding "who plays next" can be a challenge. Even if you've tried the "paddle s
   annotations={[
     {
       text: "Scanning a QR code is the simplest and quickest way for anyone to join the queue. However, if the QR code is damaged, then searching for your local league is just as effective.",
-      left: 37,
-      top: 18,
-      size: 28,
-      lineY: 24,
+      left: 3,
+      top: 16.2,
+      width: 94,
+      height: 17.2,
+      lineY: 24.8,
     },
     {
       text: "See how many players are at your local courts. When there aren't enough players for a match, LittlePickle will send a notification, letting others know you need more players. This system is also designed to keep players coming back to the app, even if they're not at the courts.",
-      left: 12,
-      top: 50,
-      size: 28,
-      lineY: 56,
+      left: 5,
+      top: 56,
+      width: 28,
+      height: 2.8,
+      lineY: 57.4,
     },
   ]}
 />
@@ -56,17 +58,65 @@ Deciding "who plays next" can be a challenge. Even if you've tried the "paddle s
   annotations={[
     {
       text: "The player card shows when you're up next, a ranking and an estimated wait time. This feature encourages more users to download and use the app, even if someone else is keeping track of the matches.",
-      left: 27,
-      top: 23,
-      size: 46,
-      lineY: 34,
+      left: 3,
+      top: 20.5,
+      width: 94,
+      height: 18,
+      lineY: 33,
     },
     {
       text: "Any player can add players to the queue. This is great for someone who doesn't have their phone and ensures someone will still use the app, even if their friends can't.",
-      left: 72,
-      top: 57,
-      size: 23,
-      lineY: 62,
+      left: 78,
+      top: 58.4,
+      size: 18,
+      lineY: 62.3,
+    },
+  ]}
+/>
+
+<AnnotatedPhone
+  src="/images/cases/LittlePickle/screenshots/08-recommended-matches-initial.png"
+  alt="LittlePickle recommended matches screen with controls for creating a custom match, viewing match history, choosing the best match and passing a turn."
+  annotations={[
+    {
+      text: "Custom match gives players the choice to come up with their own matches, while still incentivising to report the score and use the app.",
+      side: "left",
+      left: 3,
+      top: 16.3,
+      width: 47,
+      height: 7.8,
+      lineY: 20.2,
+      copyY: 14,
+    },
+    {
+      text: "The match history protects against any mis-clicks, allowing any player to quickly fix a score and not reach out to an admin.",
+      side: "right",
+      left: 50,
+      top: 16.3,
+      width: 47,
+      height: 7.8,
+      lineY: 20.2,
+      copyY: 14,
+    },
+    {
+      text: "The backend algorithm uses a FastAPI for balance match making, while also ensuring every player has an equal amount of play time. This is a core feature that users will enjoy the most, leading to players sharing and recommending LittlePickle.",
+      side: "left",
+      left: 4,
+      top: 26,
+      width: 30,
+      height: 5,
+      lineY: 28.5,
+      copyY: 57,
+    },
+    {
+      text: "The pass button allows players to skip their turn so they can sit out an extra match and play at their pace.",
+      side: "right",
+      left: 81,
+      top: 30.8,
+      width: 15,
+      height: 5,
+      lineY: 33.3,
+      copyY: 48,
     },
   ]}
 />

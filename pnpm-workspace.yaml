@@ -1,2 +1,6 @@
 packages:
   - "."
+allowBuilds:
+  chromedriver: false
+  esbuild: false
+  sharp: false

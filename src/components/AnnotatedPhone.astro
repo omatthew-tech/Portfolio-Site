@@ -5,14 +5,18 @@ interface Annotation {
   text: string;
   left: number;
   top: number;
-  size: number;
+  size?: number;
+  width?: number;
+  height?: number;
   lineY: number;
+  copyY?: number;
+  side?: "left" | "right";
 }
 
 interface Props {
   src: string;
   alt: string;
-  annotations: [Annotation, Annotation];
+  annotations: Annotation[];
   copySide?: "left" | "right";
   width?: number;
   height?: number;
@@ -27,35 +31,85 @@ const {
   height = 2868,
 } = Astro.props;
 
-const annotationStyle = (annotation: Annotation) =>
-  [
+const annotationSide = (annotation: Annotation) =>
+  annotation.side ?? copySide;
+
+const annotatedItems = annotations.map((annotation, index) => ({
+  annotation,
+  index,
+}));
+const leftAnnotations = annotatedItems.filter(
+  ({ annotation }) => annotationSide(annotation) === "left",
+);
+const rightAnnotations = annotatedItems.filter(
+  ({ annotation }) => annotationSide(annotation) === "right",
+);
+const isSplit = leftAnnotations.length > 0 && rightAnnotations.length > 0;
+
+const annotationStyle = (annotation: Annotation) => {
+  const targetWidth = annotation.width ?? annotation.size ?? 20;
+  const targetHeight =
+    annotation.height ?? targetWidth * (width / height);
+  const copyY = annotation.copyY ?? annotation.lineY;
+
+  return [
     `--target-left: ${annotation.left}%`,
     `--target-top: ${annotation.top}%`,
-    `--target-size: ${annotation.size}%`,
+    `--target-width: ${targetWidth}%`,
+    `--target-height: ${targetHeight}%`,
+    `--target-right: ${100 - annotation.left - targetWidth}%`,
     `--line-y: ${annotation.lineY}%`,
+    `--copy-y: ${copyY}%`,
+    `--elbow-top: ${Math.min(copyY, annotation.lineY)}%`,
+    `--elbow-height: ${Math.abs(copyY - annotation.lineY)}%`,
   ].join("; ");
+};
 ---
 
 <section
   class:list={[
     "figure",
     "annotated-phone",
-    copySide === "right" && "annotated-phone-copy-right",
+    !isSplit && copySide === "right" && "annotated-phone-copy-right",
+    isSplit && "annotated-phone-split",
   ]}
   aria-label="Annotated LittlePickle interface"
 >
-  <ol class="annotation-copy" aria-label="Interface design decisions">
-    {
-      annotations.map((annotation) => (
-        <li
-          class="annotation-copy-item"
-          style={`--line-y: ${annotation.lineY}%`}
-        >
-          <p>{annotation.text}</p>
-        </li>
-      ))
-    }
-  </ol>
+  {
+    leftAnnotations.length > 0 && (
+      <ol
+        class="annotation-copy annotation-copy-left"
+        aria-label="Interface design decisions"
+      >
+        {leftAnnotations.map(({ annotation, index }) => (
+          <li
+            class="annotation-copy-item"
+            style={`--copy-y: ${annotation.copyY ?? annotation.lineY}%; --mobile-order: ${index + 2}`}
+          >
+            <p>{annotation.text}</p>
+          </li>
+        ))}
+      </ol>
+    )
+  }
+
+  {
+    rightAnnotations.length > 0 && (
+      <ol
+        class="annotation-copy annotation-copy-right"
+        aria-label="Interface design decisions"
+      >
+        {rightAnnotations.map(({ annotation, index }) => (
+          <li
+            class="annotation-copy-item"
+            style={`--copy-y: ${annotation.copyY ?? annotation.lineY}%; --mobile-order: ${index + 2}`}
+          >
+            <p>{annotation.text}</p>
+          </li>
+        ))}
+      </ol>
+    )
+  }
 
   <div class="phone-frame">
     <span class="phone-button phone-button-action" aria-hidden="true"></span>
@@ -76,21 +130,39 @@ const annotationStyle = (annotation: Annotation) =>
 
       {
         annotations.map((annotation) => (
-          <>
-            <span
-              class="annotation-target"
-              style={annotationStyle(annotation)}
-              aria-hidden="true"
-            />
-            <span
-              class="annotation-line"
-              style={annotationStyle(annotation)}
-              aria-hidden="true"
-            />
-          </>
+          <span
+            class="annotation-target"
+            style={annotationStyle(annotation)}
+            aria-hidden="true"
+          />
         ))
       }
     </div>
+
+    {
+      annotations.map((annotation) => (
+        <>
+          <span
+            class:list={[
+              "annotation-line",
+              annotationSide(annotation) === "right" &&
+                "annotation-line-right",
+            ]}
+            style={annotationStyle(annotation)}
+            aria-hidden="true"
+          />
+          <span
+            class:list={[
+              "annotation-elbow",
+              annotationSide(annotation) === "right" &&
+                "annotation-elbow-right",
+            ]}
+            style={annotationStyle(annotation)}
+            aria-hidden="true"
+          />
+        </>
+      ))
+    }
   </div>
 </section>
 
@@ -113,30 +185,48 @@ const annotationStyle = (annotation: Annotation) =>
       minmax(0, 1fr);
   }
 
+  .annotated-phone-split {
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, calc(var(--spacing-1600) * 3))
+      minmax(0, 1fr);
+  }
+
   .annotation-copy {
-    grid-column: 1;
     grid-row: 1;
     list-style: none;
     margin: 0;
     min-height: 100%;
     padding: 0;
     position: relative;
+    z-index: 3;
   }
 
-  .annotated-phone-copy-right .annotation-copy {
+  .annotation-copy-left {
+    grid-column: 1;
+  }
+
+  .annotation-copy-right {
     grid-column: 2;
   }
 
+  .annotated-phone-split .annotation-copy-right {
+    grid-column: 3;
+  }
+
   .annotation-copy-item {
-    inset-block-start: var(--line-y);
+    inset-block-start: var(--copy-y);
     inset-inline: 0;
     margin: 0;
-    padding-inline-end: var(--spacing-300);
     position: absolute;
     transform: translateY(-50%);
   }
 
-  .annotated-phone-copy-right .annotation-copy-item {
+  .annotation-copy-left .annotation-copy-item {
+    padding-inline-end: var(--spacing-300);
+  }
+
+  .annotation-copy-right .annotation-copy-item {
     padding-inline: var(--spacing-300) 0;
   }
 
@@ -145,24 +235,21 @@ const annotationStyle = (annotation: Annotation) =>
     max-width: var(--measure-prose);
   }
 
-  .annotation-copy-item::after,
-  .annotated-phone-copy-right .annotation-copy-item::before {
+  .annotation-copy-left .annotation-copy-item::after,
+  .annotation-copy-right .annotation-copy-item::before {
     border-block-start: var(--spacing-025) solid var(--color-accent);
     content: "";
     inset-block-start: 50%;
     position: absolute;
-    width: var(--gap-section);
+    width: calc(var(--gap-section) + var(--spacing-100));
+    z-index: 3;
   }
 
-  .annotation-copy-item::after {
+  .annotation-copy-left .annotation-copy-item::after {
     inset-inline-start: 100%;
   }
 
-  .annotated-phone-copy-right .annotation-copy-item::after {
-    content: none;
-  }
-
-  .annotated-phone-copy-right .annotation-copy-item::before {
+  .annotation-copy-right .annotation-copy-item::before {
     inset-inline-end: 100%;
   }
 
@@ -185,6 +272,11 @@ const annotationStyle = (annotation: Annotation) =>
   .annotated-phone-copy-right .phone-frame {
     grid-column: 1;
     justify-self: start;
+  }
+
+  .annotated-phone-split .phone-frame {
+    grid-column: 2;
+    justify-self: center;
   }
 
   .phone-screen {
@@ -240,15 +332,15 @@ const annotationStyle = (annotation: Annotation) =>
   }
 
   .annotation-target {
-    aspect-ratio: 1;
     border: var(--spacing-025) solid var(--color-accent);
     border-radius: var(--radius-pill);
     box-shadow: 0 0 0 var(--spacing-050)
       color-mix(in srgb, var(--color-accent) 20%, transparent);
+    height: var(--target-height);
     inset-block-start: var(--target-top);
     inset-inline-start: var(--target-left);
     position: absolute;
-    width: var(--target-size);
+    width: var(--target-width);
     z-index: 2;
   }
 
@@ -256,31 +348,49 @@ const annotationStyle = (annotation: Annotation) =>
     background: var(--color-accent);
     height: var(--spacing-025);
     inset-block-start: var(--line-y);
-    inset-inline-start: 0;
+    inset-inline-start: calc(var(--spacing-025) * -1);
     position: absolute;
-    width: var(--target-left);
+    width: calc(var(--target-left) + var(--spacing-100));
     z-index: 1;
   }
 
-  .annotated-phone-copy-right .annotation-line {
-    inset-inline-end: 0;
-    inset-inline-start: calc(var(--target-left) + var(--target-size));
-    width: auto;
+  .annotation-line-right {
+    inset-inline-end: calc(var(--spacing-025) * -1);
+    inset-inline-start: auto;
+    width: calc(var(--target-right) + var(--spacing-100));
+  }
+
+  .annotation-elbow {
+    background: var(--color-accent);
+    height: var(--elbow-height);
+    inset-block-start: var(--elbow-top);
+    inset-inline-start: calc(var(--spacing-025) * -1);
+    position: absolute;
+    width: var(--spacing-025);
+    z-index: 1;
+  }
+
+  .annotation-elbow-right {
+    inset-inline-end: calc(var(--spacing-025) * -1);
+    inset-inline-start: auto;
   }
 
   .annotated-phone + .annotated-phone {
     margin-block-start: var(--gap-section);
   }
 
-  @media (max-width: 47.99rem) {
+  @media (max-width: 63.99rem) {
     .annotated-phone,
-    .annotated-phone-copy-right {
+    .annotated-phone-copy-right,
+    .annotated-phone-split {
       display: flex;
       flex-direction: column;
+      gap: var(--spacing-300);
     }
 
     .phone-frame,
-    .annotated-phone-copy-right .phone-frame {
+    .annotated-phone-copy-right .phone-frame,
+    .annotated-phone-split .phone-frame {
       align-self: center;
       max-width: calc(100% - var(--spacing-200));
       order: 1;
@@ -288,31 +398,32 @@ const annotationStyle = (annotation: Annotation) =>
     }
 
     .annotation-copy,
-    .annotated-phone-copy-right .annotation-copy {
-      display: grid;
-      gap: var(--spacing-300);
-      min-height: 0;
-      order: 2;
+    .annotated-phone-copy-right .annotation-copy,
+    .annotated-phone-split .annotation-copy {
+      display: contents;
     }
 
     .annotation-copy-item,
-    .annotated-phone-copy-right .annotation-copy-item {
+    .annotated-phone-copy-right .annotation-copy-item,
+    .annotated-phone-split .annotation-copy-item {
       inset: auto;
+      order: var(--mobile-order);
       padding-inline: var(--spacing-300) 0;
       position: relative;
       transform: none;
     }
 
-    .annotation-copy-item::after,
-    .annotated-phone-copy-right .annotation-copy-item::after {
+    .annotation-copy-left .annotation-copy-item::after,
+    .annotation-copy-right .annotation-copy-item::after {
       border-block-start: var(--spacing-025) solid var(--color-accent);
       content: "";
       inset-block-start: 0.7em;
       inset-inline: 0 auto;
+      position: absolute;
       width: var(--spacing-200);
     }
 
-    .annotated-phone-copy-right .annotation-copy-item::before {
+    .annotation-copy-right .annotation-copy-item::before {
       content: none;
     }
   }
