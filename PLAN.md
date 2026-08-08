@@ -339,12 +339,14 @@ If any gate fails after the implementation step, **stop** and either fix or open
 |---|---|---|
 | YYYY-MM-DD | — | initial plan written |
 | 2026-05-23 | M0-M7 implementation pass | Scaffolded Astro/Tailwind/MDX portfolio from DESIGN.md, added layout primitives, work/about/contact routes, Cloudflare Images wrapper with local placeholders, and CI skeleton. Build/typecheck/design lint/format/test pass locally. |
+| 2026-08-08 | MattyOphotos archive | Moved the case-study source and public media into a tracked archive so production emits no page, sitemap entry, reference, or asset; restoration steps are documented with the archive. |
 
 ### Surprises & discoveries
 - *(none yet)*
 
 ### Blockers
 - 2026-05-23: Local axe/Lighthouse gates are not green because the installed Chrome crashes before WebDriver/headless Chrome can start. Browser route smoke passed through the Codex in-app browser, and CLI gates passed except axe/LH.
+- 2026-08-08: Local-only Lighthouse completes, but the existing site remains below the performance and page-weight budgets: home 88/565 KB and Test4Test 86-87/664 KB. Accessibility, best practices, and SEO are all 100. The MattyOphotos archive reduces deployed content and does not cause this baseline issue.
 
 ---
 
